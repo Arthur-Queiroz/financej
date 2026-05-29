@@ -18,7 +18,6 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   routeRules: {
-    '/': { prerender: true },
     // Clerk webhook receives raw POST from external service — CSRF must be disabled
     '/api/webhooks/**': { security: { xssValidator: false } }
   },
