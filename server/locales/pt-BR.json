@@ -1,0 +1,24 @@
+{
+  "summary": "Resumo",
+  "expenses": "Despesas",
+  "metric": "Métrica",
+  "value": "Valor",
+  "totalIncome": "Renda Total",
+  "totalExpenses": "Despesas Totais",
+  "balance": "Saldo",
+  "spentPercent": "Gasto (%)",
+  "date": "Data",
+  "amount": "Valor",
+  "category": "Categoria",
+  "description": "Descrição",
+  "categories": {
+    "FOOD": "Alimento",
+    "SUBSCRIPTION": "Assinatura",
+    "ENTERTAINMENT": "Entretenimento",
+    "PERSONAL_EXPENSE": "Gasto Pessoal",
+    "INVESTMENT": "Investimento",
+    "EDUCATION": "Estudo",
+    "RECURRING": "Recorrente",
+    "PERSONAL_PURCHASE": "Compra Pessoal"
+  }
+}

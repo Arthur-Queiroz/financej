@@ -1,0 +1,24 @@
+{
+  "summary": "Summary",
+  "expenses": "Expenses",
+  "metric": "Metric",
+  "value": "Value",
+  "totalIncome": "Total Income",
+  "totalExpenses": "Total Expenses",
+  "balance": "Balance",
+  "spentPercent": "Spent (%)",
+  "date": "Date",
+  "amount": "Amount",
+  "category": "Category",
+  "description": "Description",
+  "categories": {
+    "FOOD": "Food",
+    "SUBSCRIPTION": "Subscription",
+    "ENTERTAINMENT": "Entertainment",
+    "PERSONAL_EXPENSE": "Personal Expense",
+    "INVESTMENT": "Investment",
+    "EDUCATION": "Education",
+    "RECURRING": "Recurring",
+    "PERSONAL_PURCHASE": "Personal Purchase"
+  }
+}

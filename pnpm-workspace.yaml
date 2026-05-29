@@ -1,0 +1,16 @@
+allowBuilds:
+  '@clerk/shared': true
+  '@parcel/watcher': false
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@tailwindcss/oxide': false
+  esbuild: false
+  prisma: true
+  sharp: true
+  unrs-resolver: false
+  vue-demi: false
+minimumReleaseAgeExclude:
+  - '@clerk/backend@3.4.14'
+  - '@clerk/nuxt@2.5.2'
+  - '@clerk/shared@4.14.0'
+  - '@clerk/vue@2.3.2'

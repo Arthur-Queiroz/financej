@@ -1,0 +1,40 @@
+{
+  "name": "finance-manager",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@clerk/nuxt": "2.5.2",
+    "@iconify-json/lucide": "^1.2.108",
+    "@iconify-json/simple-icons": "^1.2.83",
+    "@nuxt/image": "2.0.0",
+    "@nuxt/ui": "^4.7.1",
+    "@nuxtjs/google-fonts": "3.2.0",
+    "@nuxtjs/i18n": "10.4.0",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "exceljs": "^4.4.0",
+    "nuxt": "^4.4.6",
+    "nuxt-icons": "4.0.0",
+    "nuxt-security": "2.6.0",
+    "pg": "^8.21.0",
+    "svix": "^1.94.0",
+    "tailwindcss": "^4.3.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.15.2",
+    "@types/pg": "^8.20.0",
+    "eslint": "^10.4.0",
+    "prisma": "^7.8.0",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.0"
+  },
+  "packageManager": "pnpm@11.1.3"
+}
