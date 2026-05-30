@@ -108,14 +108,16 @@
     "sign_out": "Sair"
   },
   "categories": {
-    "FOOD": "Alimento",
+    "FOOD": "Alimentação",
     "SUBSCRIPTION": "Assinatura",
-    "ENTERTAINMENT": "Entretenimento",
+    "LEISURE": "Lazer",
     "PERSONAL_EXPENSE": "Gasto Pessoal",
     "INVESTMENT": "Investimento",
     "EDUCATION": "Estudo",
     "RECURRING": "Recorrente",
-    "PERSONAL_PURCHASE": "Compra Pessoal"
+    "HOUSE": "Casa",
+    "TRANSPORT": "Transporte",
+    "OTHER": "Outros"
   },
   "currencies": {
     "brl": "Real Brasileiro",

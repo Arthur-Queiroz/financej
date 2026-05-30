@@ -12,9 +12,11 @@ enum ExpenseCategory {
   FOOD
   RECURRING
   SUBSCRIPTION
-  ENTERTAINMENT
-  PERSONAL_PURCHASE
+  LEISURE
   INVESTMENT
+  HOUSE
+  TRANSPORT
+  OTHER
 }
 
 enum IncomeRecurrence {

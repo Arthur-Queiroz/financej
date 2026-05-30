@@ -14,11 +14,13 @@
   "categories": {
     "FOOD": "Food",
     "SUBSCRIPTION": "Subscription",
-    "ENTERTAINMENT": "Entertainment",
+    "LEISURE": "Leisure",
     "PERSONAL_EXPENSE": "Personal Expense",
     "INVESTMENT": "Investment",
     "EDUCATION": "Education",
     "RECURRING": "Recurring",
-    "PERSONAL_PURCHASE": "Personal Purchase"
+    "HOUSE": "House",
+    "TRANSPORT": "Transport",
+    "OTHER": "Other"
   }
 }
