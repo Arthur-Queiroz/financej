@@ -48,7 +48,7 @@ async function submit() {
 </script>
 
 <template>
-  <UModal v-model:open="open" :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[540px] max-h-[90vh] overflow-hidden flex flex-col' }">
+  <UModal v-model:open="open" :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[90vw] md:max-w-[640px] max-h-[90vh] overflow-hidden flex flex-col' }">
     <template #content>
       <div class="flex flex-col max-h-[90vh]" style="background: var(--surface); border-radius: 24px; border: 2px solid var(--accent);">
         <div class="flex-1 overflow-y-auto" style="padding: 28px 28px 0;">

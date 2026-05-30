@@ -140,10 +140,10 @@ DATABASE_URL="postgresql://user:password@host:5432/database"
 
 # Clerk
 NUXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
-CLERK_SECRET_KEY="sk_test_..."
+NUXT_CLERK_SECRET_KEY="sk_test_..."
 NUXT_CLERK_SIGN_IN_URL="/sign-in"
 NUXT_CLERK_SIGN_UP_URL="/sign-up"
-NUXT_CLERK_WEBHOOK_SECRET="whsec_..."
+CLERK_WEBHOOK_SECRET="whsec_..."
 ```
 
 4. **Execute as migrações do banco de dados**
