@@ -48,9 +48,10 @@ async function submit() {
 </script>
 
 <template>
-  <UModal v-model:open="open" :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[540px]' }">
+  <UModal v-model:open="open" :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[540px] max-h-[90vh] overflow-hidden flex flex-col' }">
     <template #content>
-      <div style="padding: 28px; background: var(--surface); border-radius: 24px; border: 2px solid var(--accent);">
+      <div class="flex flex-col max-h-[90vh]" style="background: var(--surface); border-radius: 24px; border: 2px solid var(--accent);">
+        <div class="flex-1 overflow-y-auto" style="padding: 28px 28px 0;">
         <!-- Header -->
         <div class="flex justify-between items-start mb-6">
           <div>
@@ -94,11 +95,11 @@ async function submit() {
         <!-- Category quick picker -->
         <div class="mb-5">
           <div class="fm-label mb-2.5">{{ t('expense.shortcut') }}</div>
-          <div class="grid grid-cols-4 gap-2">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
             <button
               v-for="cat in CATEGORY_LIST"
               :key="cat.key"
-              class="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium text-left transition-all"
+              class="flex items-center gap-1.5 px-2.5 py-2.5 rounded-xl text-[11px] sm:text-xs font-medium text-left transition-all"
               :style="{
                 background: category === cat.key ? `oklch(from var(${cat.token}) l c h / 0.18)` : 'var(--surface-2)',
                 border: `1px solid ${category === cat.key ? `var(${cat.token})` : 'var(--border)'}`,
@@ -108,7 +109,7 @@ async function submit() {
               @click="category = cat.key"
             >
               <UIcon :name="cat.icon" class="w-3.5 h-3.5 shrink-0" />
-              <span class="truncate">{{ cat.label }}</span>
+              <span class="truncate text-[11px] sm:text-xs">{{ cat.label }}</span>
             </button>
           </div>
         </div>
@@ -120,9 +121,10 @@ async function submit() {
           </label>
           <textarea v-model="description" class="fm-input fm-textarea" :placeholder="t('expense.description_placeholder')" />
         </div>
+        </div>
 
-        <!-- Footer -->
-        <div class="flex justify-between items-center pt-5" style="border-top: 1px solid var(--border);">
+        <!-- Footer (fixed at bottom) -->
+        <div class="flex-shrink-0 flex justify-between items-center px-7 py-5" style="border-top: 1px solid var(--border); background: var(--surface);">
           <label class="flex items-center gap-2 text-sm cursor-pointer select-none" style="color: var(--ink-2);">
             <span
               class="relative inline-block rounded-full"
@@ -135,7 +137,7 @@ async function submit() {
                 :style="{ left: keepAdding ? '16px' : '2px', background: keepAdding ? 'var(--accent)' : 'var(--ink-3)' }"
               />
             </span>
-            {{ t('expense.keep_adding') }}
+            <span class="hidden sm:inline">{{ t('expense.keep_adding') }}</span>
           </label>
           <div class="flex gap-2.5">
             <button class="fm-btn fm-btn--ghost" @click="open = false">{{ t('expense.cancel') }}</button>

@@ -192,6 +192,15 @@ const categoryItems = computed(() =>
       </div>
     </section>
 
+    <!-- Mobile Income Button -->
+    <NuxtLink to="/settings/income" class="md:hidden">
+      <button class="fm-btn fm-btn--ghost w-full flex items-center justify-center gap-2">
+        <UIcon name="lucide:wallet" class="w-4 h-4" />
+        {{ t('income.title') }}
+        <UIcon name="lucide:arrow-right" class="w-4 h-4 ml-auto" />
+      </button>
+    </NuxtLink>
+
   </div>
 
   <!-- Expense Modal -->
