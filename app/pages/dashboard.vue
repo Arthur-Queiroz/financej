@@ -206,6 +206,11 @@ const categoryItems = computed(() =>
       </div>
     </section>
 
+    <!-- Export button (mobile only) -->
+    <button class="fm-btn fm-btn--ghost w-full md:hidden" @click="handleExportDashboard">
+      <UIcon name="lucide:download" class="w-4 h-4" /> {{ t('dashboard.export') }}
+    </button>
+
   </div>
 
   <!-- Expense Modal -->
