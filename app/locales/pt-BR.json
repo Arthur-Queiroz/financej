@@ -3,13 +3,15 @@
     "dashboard": "Dashboard",
     "expenses": "Gastos",
     "incomes": "Rendas",
-    "export": "Exportar",
-    "settings": "Configurações"
+    "export": "Exportar planilha",
+    "settings": "Configurações",
+    "menu": "Menu"
   },
   "dashboard": {
     "greeting_morning": "Bom dia",
     "greeting_afternoon": "Boa tarde",
     "greeting_evening": "Boa noite",
+    "you": "você",
     "balance": "Saldo do mês",
     "income": "Renda",
     "expenses": "Despesas",
@@ -18,13 +20,18 @@
     "recent_subtitle": "Últimos lançamentos",
     "see_all": "Ver tudo",
     "register": "Registrar gasto",
-    "export": "Exportar",
+    "export": "Exportar dashboard",
     "entries": "lançamentos",
     "average": "Média",
     "used": "usado",
     "active_categories": "categorias ativas",
     "no_expenses": "Nenhuma despesa no período.",
-    "total": "Total"
+    "total": "Total",
+    "report_filename": "relatorio",
+    "financial_report": "Relatório Financeiro",
+    "page": "Página",
+    "of": "de",
+    "all_expenses": "Todas as Despesas"
   },
   "period": {
     "week": "Semana",

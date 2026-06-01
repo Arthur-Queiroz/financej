@@ -21,6 +21,8 @@
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "exceljs": "^4.4.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.1",
     "nuxt": "^4.4.6",
     "nuxt-icons": "4.0.0",
     "nuxt-security": "2.6.0",

@@ -4,6 +4,7 @@ allowBuilds:
   '@prisma/client': true
   '@prisma/engines': true
   '@tailwindcss/oxide': false
+  core-js: true
   esbuild: false
   prisma: true
   sharp: true

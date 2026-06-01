@@ -22,8 +22,24 @@ const todayLabel = computed(() =>
 const { period, dates, tabs } = usePeriod()
 const { summary, loading: summaryLoading } = useDashboard(dates)
 const { expenses, loading: expLoading } = useExpenses(dates)
+const { exportDashboardToPDF } = useExportDashboard()
 
 const showModal = useState('showExpenseModal', () => false)
+const showAllExpensesModal = ref(false)
+
+const currentPeriodLabel = computed(() => {
+  const tab = tabs.value.find(t => t.key === period.value)
+  return tab?.label || 'dashboard'
+})
+
+async function handleExportDashboard() {
+  await exportDashboardToPDF(
+    summary.value,
+    expenses.value,
+    currentPeriodLabel.value,
+    { from: dates.value.from, to: dates.value.to }
+  )
+}
 
 const donutData = computed(() =>
   (summary.value?.byCategory ?? []).map(c => ({
@@ -38,7 +54,7 @@ const categoryItems = computed(() =>
 </script>
 
 <template>
-  <div class="flex flex-col gap-6 p-7 pb-24 md:pb-7" style="color: var(--ink);">
+  <div id="dashboard-content" class="flex flex-col gap-6 p-7 pb-24 md:pb-7" style="color: var(--ink);">
 
     <!-- Header -->
     <header class="flex items-start justify-between">
@@ -49,11 +65,9 @@ const categoryItems = computed(() =>
         </h1>
       </div>
       <div class="hidden md:flex items-center gap-2.5">
-        <NuxtLink to="/export">
-          <button class="fm-btn fm-btn--ghost">
-            <UIcon name="lucide:download" class="w-4 h-4" /> {{ t('dashboard.export') }}
-          </button>
-        </NuxtLink>
+        <button class="fm-btn fm-btn--ghost" @click="handleExportDashboard">
+          <UIcon name="lucide:download" class="w-4 h-4" /> {{ t('dashboard.export') }}
+        </button>
         <button class="fm-btn fm-btn--primary" @click="showModal = true">
           <UIcon name="lucide:plus" class="w-4 h-4" style="stroke-width: 2.4;" /> {{ t('dashboard.register') }}
         </button>
@@ -173,7 +187,7 @@ const categoryItems = computed(() =>
             <div style="font-size: 16px; font-weight: 600; color: var(--ink);">{{ t('dashboard.recent') }}</div>
             <div class="text-xs mt-0.5" style="color: var(--ink-3);">{{ t('dashboard.recent_subtitle') }}</div>
           </div>
-          <button class="fm-btn fm-btn--subtle fm-btn--sm">
+          <button class="fm-btn fm-btn--subtle fm-btn--sm" @click="showAllExpensesModal = true">
             {{ t('dashboard.see_all') }} <UIcon name="lucide:arrow-right" class="w-3.5 h-3.5" />
           </button>
         </div>
@@ -192,17 +206,11 @@ const categoryItems = computed(() =>
       </div>
     </section>
 
-    <!-- Mobile Income Button -->
-    <NuxtLink to="/settings/income" class="md:hidden">
-      <button class="fm-btn fm-btn--ghost w-full flex items-center justify-center gap-2">
-        <UIcon name="lucide:wallet" class="w-4 h-4" />
-        {{ t('income.title') }}
-        <UIcon name="lucide:arrow-right" class="w-4 h-4 ml-auto" />
-      </button>
-    </NuxtLink>
-
   </div>
 
   <!-- Expense Modal -->
   <ExpenseModal v-model="showModal" @saved="refreshNuxtData()" />
+
+  <!-- All Expenses Modal -->
+  <AllExpensesModal v-model="showAllExpensesModal" :expenses="expenses" :loading="expLoading" />
 </template>

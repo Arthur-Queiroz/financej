@@ -50,8 +50,8 @@ async function submit() {
 <template>
   <UModal v-model:open="open" :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[90vw] md:max-w-[640px] max-h-[90vh] overflow-hidden flex flex-col' }">
     <template #content>
-      <div class="flex flex-col max-h-[90vh]" style="background: var(--surface); border-radius: 24px; border: 2px solid var(--accent);">
-        <div class="flex-1 overflow-y-auto" style="padding: 28px 28px 0;">
+      <div class="expense-modal-container">
+        <div class="expense-modal-scroll-area">
         <!-- Header -->
         <div class="flex justify-between items-start mb-6">
           <div>
@@ -124,7 +124,7 @@ async function submit() {
         </div>
 
         <!-- Footer (fixed at bottom) -->
-        <div class="flex-shrink-0 flex justify-between items-center px-7 py-5" style="border-top: 1px solid var(--border); background: var(--surface);">
+        <div class="expense-modal-footer">
           <label class="flex items-center gap-2 text-sm cursor-pointer select-none" style="color: var(--ink-2);">
             <span
               class="relative inline-block rounded-full"
@@ -151,3 +151,43 @@ async function submit() {
     </template>
   </UModal>
 </template>
+
+<style scoped>
+.expense-modal-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  background: var(--surface);
+  border-radius: 24px;
+  border: 3px solid var(--accent);
+  overflow: hidden;
+}
+
+.expense-modal-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 28px 0;
+}
+
+.expense-modal-footer {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+/* Hide scrollbar on desktop while keeping scroll functionality */
+@media (min-width: 768px) {
+  .expense-modal-scroll-area {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  .expense-modal-scroll-area::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+</style>

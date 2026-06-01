@@ -4,59 +4,201 @@ defineProps<{
   isActive: (to: string) => boolean
 }>()
 
+const { t } = useI18n()
 const showExpenseModal = useState('showExpenseModal', () => false)
+const mobileMenuOpen = useState('mobileMenuOpen', () => false)
+
+function openMenu() {
+  mobileMenuOpen.value = true
+}
 </script>
 
 <template>
-  <nav
-    class="bottom-nav fixed bottom-0 left-0 right-0 z-50 grid pb-safe"
-    :style="{
-      gridTemplateColumns: 'repeat(5, 1fr)',
-      height: '64px',
-      background: 'oklch(from var(--bg) l c h / 0.92)',
-      backdropFilter: 'blur(14px)',
-      borderTop: '1px solid var(--border)',
-      alignItems: 'center',
-      padding: '0 12px 8px',
-    }"
-  >
-    <NuxtLink
-      v-for="(item, i) in items.slice(0, 2)"
-      :key="item.to"
-      :to="item.to"
-      class="flex flex-col items-center gap-1"
-      :style="{ color: isActive(item.to) ? 'var(--ink)' : 'var(--ink-mute)' }"
+  <nav class="bottom-nav">
+    <!-- Menu button (left) -->
+    <button
+      class="nav-btn"
+      type="button"
+      @click="openMenu"
     >
-      <UIcon :name="item.icon" :class="isActive(item.to) ? 'w-5 h-5' : 'w-5 h-5'" />
-      <span class="text-[10px] font-medium">{{ item.label }}</span>
+      <div class="nav-btn-content">
+        <UIcon name="lucide:menu" class="w-5 h-5" />
+        <span class="nav-label">{{ t('nav.menu') }}</span>
+      </div>
+    </button>
+
+    <!-- First nav item -->
+    <NuxtLink
+      :to="items[0].to"
+      class="nav-btn"
+    >
+      <div
+        class="nav-btn-content"
+        :class="{ 'active': isActive(items[0].to) }"
+      >
+        <div class="nav-icon-wrapper">
+          <UIcon :name="items[0].icon" class="w-5 h-5" />
+          <div v-if="isActive(items[0].to)" class="active-indicator" />
+        </div>
+        <span class="nav-label">{{ items[0].label }}</span>
+      </div>
     </NuxtLink>
 
-    <!-- FAB -->
-    <div class="grid place-items-center">
+    <!-- FAB (center) -->
+    <div class="fab-wrapper">
       <button
-        class="w-13 h-13 rounded-full grid place-items-center"
-        style="background: var(--accent); color: var(--accent-ink); margin-top: -20px; box-shadow: 0 8px 20px -4px oklch(from var(--accent) l c h / 0.5);"
+        class="fab"
         @click="showExpenseModal = true"
       >
-        <UIcon name="lucide:plus" class="w-6 h-6" style="stroke-width: 2.4;" />
+        <UIcon name="lucide:plus" class="w-6 h-6" />
       </button>
     </div>
 
+    <!-- Second nav item -->
     <NuxtLink
-      v-for="item in items.slice(3, 5)"
-      :key="item.to"
-      :to="item.to"
-      class="flex flex-col items-center gap-1"
-      :style="{ color: isActive(item.to) ? 'var(--ink)' : 'var(--ink-mute)' }"
+      :to="items[1].to"
+      class="nav-btn"
     >
-      <UIcon :name="item.icon" class="w-5 h-5" />
-      <span class="text-[10px] font-medium">{{ item.label }}</span>
+      <div
+        class="nav-btn-content"
+        :class="{ 'active': isActive(items[1].to) }"
+      >
+        <div class="nav-icon-wrapper">
+          <UIcon :name="items[1].icon" class="w-5 h-5" />
+          <div v-if="isActive(items[1].to)" class="active-indicator" />
+        </div>
+        <span class="nav-label">{{ items[1].label }}</span>
+      </div>
+    </NuxtLink>
+
+    <!-- Settings button (right) -->
+    <NuxtLink
+      :to="items[4].to"
+      class="nav-btn"
+    >
+      <div
+        class="nav-btn-content"
+        :class="{ 'active': isActive(items[4].to) }"
+      >
+        <div class="nav-icon-wrapper">
+          <UIcon :name="items[4].icon" class="w-5 h-5" />
+          <div v-if="isActive(items[4].to)" class="active-indicator" />
+        </div>
+        <span class="nav-label">{{ items[4].label }}</span>
+      </div>
     </NuxtLink>
   </nav>
 </template>
 
 <style scoped>
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  height: 68px;
+  padding: 0 8px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  background: oklch(from var(--bg) l c h / 0.94);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink-mute);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn-content.active {
+  color: var(--ink);
+}
+
+.nav-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 32px;
+}
+
+.active-indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--accent);
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.fab-wrapper {
+  display: grid;
+  place-items: center;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  margin-top: -24px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow:
+    0 4px 16px -2px oklch(from var(--accent) l c h / 0.4),
+    0 0 0 1px oklch(from var(--accent) calc(l - 0.1) c h / 0.3);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fab:active {
+  transform: scale(0.94);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 @media (min-width: 768px) {
-  .bottom-nav { display: none !important; }
+  .bottom-nav {
+    display: none !important;
+  }
 }
 </style>

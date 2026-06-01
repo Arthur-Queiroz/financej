@@ -61,6 +61,9 @@ function isActive(to: string) {
       <slot />
       <AppBottomNav :items="navItems" :is-active="isActive" />
     </main>
+
+    <!-- Mobile Menu Drawer -->
+    <AppMobileMenu />
   </div>
 </template>
 

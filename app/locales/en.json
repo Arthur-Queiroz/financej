@@ -3,13 +3,15 @@
     "dashboard": "Dashboard",
     "expenses": "Expenses",
     "incomes": "Income",
-    "export": "Export",
-    "settings": "Settings"
+    "export": "Export spreadsheet",
+    "settings": "Settings",
+    "menu": "Menu"
   },
   "dashboard": {
     "greeting_morning": "Good morning",
     "greeting_afternoon": "Good afternoon",
     "greeting_evening": "Good evening",
+    "you": "you",
     "balance": "Monthly balance",
     "income": "Income",
     "expenses": "Expenses",
@@ -18,13 +20,18 @@
     "recent_subtitle": "Latest entries",
     "see_all": "See all",
     "register": "Add expense",
-    "export": "Export",
+    "export": "Export dashboard",
     "entries": "entries",
     "average": "Average",
     "used": "used",
     "active_categories": "active categories",
     "no_expenses": "No expenses in this period.",
-    "total": "Total"
+    "total": "Total",
+    "report_filename": "report",
+    "financial_report": "Financial Report",
+    "page": "Page",
+    "of": "of",
+    "all_expenses": "All Expenses"
   },
   "period": {
     "week": "Week",
