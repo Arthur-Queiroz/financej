@@ -25,12 +25,50 @@ enum IncomeRecurrence {
   WEEKLY
 }
 
+enum VaultInterval {
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
 model User {
-  id        String    @id @default(cuid())
-  clerkId   String    @unique
-  createdAt DateTime  @default(now())
+  id        String         @id @default(cuid())
+  clerkId   String         @unique
+  createdAt DateTime       @default(now())
   expenses  Expense[]
   incomes   Income[]
+  vaults    Vault[]
+}
+
+model Vault {
+  id        String         @id @default(cuid())
+  name      String
+  icon      String
+  color     String
+  target    Decimal?       @db.Decimal(10, 2)
+  perAmount Decimal        @db.Decimal(10, 2)
+  interval  VaultInterval
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deposits  VaultDeposit[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+enum VaultDirection {
+  IN
+  OUT
+}
+
+model VaultDeposit {
+  id        String         @id @default(cuid())
+  vaultId   String
+  vault     Vault          @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+  amount    Decimal        @db.Decimal(10, 2)
+  direction VaultDirection @default(IN)
+  note      String?
+  date      DateTime
+  createdAt DateTime       @default(now())
 }
 
 model Expense {

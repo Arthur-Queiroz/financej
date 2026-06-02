@@ -6,6 +6,7 @@ const navItems = computed(() => [
   { icon: 'lucide:pie-chart',         label: t('nav.dashboard'),  to: '/dashboard' },
   { icon: 'lucide:list',              label: t('nav.expenses'),   to: '/expenses' },
   { icon: 'lucide:wallet',            label: t('nav.incomes'),    to: '/settings/income' },
+  { icon: 'lucide:piggy-bank',        label: t('nav.savings'),    to: '/savings' },
   { icon: 'lucide:file-spreadsheet',  label: t('nav.export'),     to: '/export' },
   { icon: 'lucide:settings',          label: t('nav.settings'),   to: '/settings' },
 ])

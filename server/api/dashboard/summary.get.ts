@@ -9,16 +9,25 @@ export default defineEventHandler(async (event) => {
   const fromDate = new Date(from as string)
   const toDate = new Date(`${to}T23:59:59.999Z`)
 
-  const [expenses, incomes] = await Promise.all([
+  const [expenses, incomes, vaultWithdrawals] = await Promise.all([
     db.expense.findMany({
       where: { userId, date: { gte: fromDate, lte: toDate } }
     }),
-    db.income.findMany({ where: { userId } })
+    db.income.findMany({ where: { userId } }),
+    db.vaultDeposit.findMany({
+      where: {
+        vault: { userId },
+        direction: 'OUT',
+        date: { gte: fromDate, lte: toDate }
+      },
+      select: { amount: true }
+    })
   ])
 
   const totalIncome = prorateIncome(incomes, fromDate, toDate)
   const totalExpenses = expenses.reduce((sum, e) => sum + Number(e.amount), 0)
-  const balance = totalIncome - totalExpenses
+  const totalWithdrawals = vaultWithdrawals.reduce((sum, w) => sum + Number(w.amount), 0)
+  const balance = totalIncome - totalExpenses + totalWithdrawals
   const spentPercentage = totalIncome > 0 ? (totalExpenses / totalIncome) * 100 : 0
 
   const categoryTotals = expenses.reduce<Record<string, number>>((acc, e) => {
