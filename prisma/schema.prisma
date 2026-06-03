@@ -23,6 +23,7 @@ enum IncomeRecurrence {
   MONTHLY
   BIWEEKLY
   WEEKLY
+  ONE_TIME
 }
 
 enum VaultInterval {

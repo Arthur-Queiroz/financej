@@ -46,6 +46,10 @@ export function prorateIncome(incomes: IncomeRecord[], fromDate: Date, toDate: D
     const overlapStart = start > fromDate ? start : fromDate
     const overlapEnd   = end   < toDate   ? end   : toDate
 
+    if (income.recurrence === 'ONE_TIME') {
+      return start >= fromDate && start <= toDate ? total + Number(income.amount) : total
+    }
+
     if (income.recurrence === 'MONTHLY') {
       return total + prorateMonthly(Number(income.amount), overlapStart, overlapEnd)
     }
