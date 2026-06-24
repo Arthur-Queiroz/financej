@@ -43,6 +43,10 @@ jobs:
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      # Off Vercel's infra the `VERCEL` env isn't set, so Nitro defaults to the
+      # node preset (.output) and `vercel build` then looks for `dist`. Force the
+      # vercel preset so the build emits .vercel/output (Build Output API).
+      NITRO_PRESET: vercel
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -54,7 +58,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
 
       - name: Install Vercel CLI
