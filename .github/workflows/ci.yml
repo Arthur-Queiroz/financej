@@ -24,17 +24,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # The Prisma client (custom output, gitignored) must be generated so the
+      # server types resolve during typecheck. Only needs the schema, no DB.
+      - name: Generate Prisma client
+        run: pnpm exec prisma generate
+
       - name: Lint
         run: pnpm run lint
 
       - name: Test
         run: pnpm run test
 
-      # Informational only for now — the codebase still has ~60 pre-existing type
-      # errors. Does not block the deploy gate; to be paid down incrementally.
       - name: Typecheck
         run: pnpm run typecheck
-        continue-on-error: true
 
   deploy:
     needs: quality

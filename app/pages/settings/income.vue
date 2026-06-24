@@ -287,7 +287,7 @@ function formatDate(d: string | Date) {
               <span class="flex items-center gap-1"><UIcon
                 name="lucide:calendar"
                 class="w-3 h-3"
-              /> {{ t('income.since') }} {{ new Date(inc.effectiveFrom).toLocaleDateString(currentLocale?.value?.code || 'pt-BR', { month: 'short', year: 'numeric' }) }}</span>
+              /> {{ t('income.since') }} {{ new Date(inc.effectiveFrom).toLocaleDateString(currentLocale?.code || 'pt-BR', { month: 'short', year: 'numeric' }) }}</span>
               <span class="flex items-center gap-1">
                 <span
                   class="w-1.5 h-1.5 rounded-full"

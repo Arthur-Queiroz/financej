@@ -1,5 +1,14 @@
 <script setup lang="ts">
-const { user } = useUser()
+interface ClerkUser {
+  imageUrl?: string
+  hasImage?: boolean
+  fullName?: string | null
+  firstName?: string | null
+  primaryEmailAddress?: { emailAddress?: string | null } | null
+}
+
+const { user: clerkUser } = useUser()
+const user = clerkUser as unknown as Ref<ClerkUser | null | undefined>
 
 const initials = computed(() => {
   const name = user.value?.fullName || user.value?.firstName || 'U'
@@ -32,7 +41,7 @@ const hasCustomImage = computed(() => {
       <template v-if="hasCustomImage">
         <img
           :src="user?.imageUrl"
-          :alt="user?.fullName || user?.firstName"
+          :alt="user?.fullName || user?.firstName || ''"
           class="w-full h-full rounded-full object-cover"
           style="border: 1px solid var(--accent);"
         >

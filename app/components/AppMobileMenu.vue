@@ -43,6 +43,7 @@ function handleTouchStart(e: TouchEvent) {
   if (isAnimating.value) return
 
   const touch = e.touches[0]
+  if (!touch) return
   const startX = touch.clientX
 
   // Check if swipe started from left edge or from open drawer
@@ -63,6 +64,7 @@ function handleTouchMove(e: TouchEvent) {
   if (!swipeState.value.isDragging) return
 
   const touch = e.touches[0]
+  if (!touch) return
   swipeState.value.currentX = touch.clientX
 
   const deltaX = swipeState.value.currentX - swipeState.value.startX

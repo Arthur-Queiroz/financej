@@ -4,7 +4,17 @@ definePageMeta({ layout: 'dashboard', middleware: 'auth' })
 const { t } = useI18n()
 const colorMode = useColorMode()
 const { accent, ACCENTS } = useAccent()
-const { user } = useUser()
+const { user: clerkUser } = useUser()
+const user = clerkUser as unknown as Ref<{
+  imageUrl?: string
+  hasImage?: boolean
+  fullName?: string | null
+  firstName?: string | null
+  primaryEmailAddress?: { emailAddress?: string | null } | null
+  setProfileImage: (params: { file: File | null }) => Promise<unknown>
+  reload: () => Promise<unknown>
+  update: (params: { firstName?: string, lastName?: string }) => Promise<unknown>
+} | null | undefined>
 const toast = useToast()
 const { locales, currentLocale, CURRENCIES, currentCurrency, setLanguage, setCurrency } = useLocaleSettings()
 
@@ -409,7 +419,7 @@ const activeSection = ref(t('settings.general'))
                   :value="currentLocale?.code"
                   class="fm-input"
                   style="cursor: pointer;"
-                  @change="(e) => setLanguage((e.target as HTMLSelectElement).value)"
+                  @change="(e: Event) => setLanguage((e.target as HTMLSelectElement).value)"
                 >
                   <option
                     v-for="loc in locales"
@@ -426,7 +436,7 @@ const activeSection = ref(t('settings.general'))
                   :value="currentCurrency?.code"
                   class="fm-input"
                   style="cursor: pointer;"
-                  @change="(e) => setCurrency((e.target as HTMLSelectElement).value)"
+                  @change="(e: Event) => setCurrency((e.target as HTMLSelectElement).value)"
                 >
                   <option
                     v-for="curr in CURRENCIES"

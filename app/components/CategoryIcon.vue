@@ -1,24 +1,25 @@
 <script setup lang="ts">
 const { CATEGORIES } = useCategories()
-defineProps<{ cat: string, size?: number }>()
+const props = defineProps<{ cat: string, size?: number }>()
+const meta = computed(() => CATEGORIES.value[props.cat])
 </script>
 
 <template>
   <div
-    v-if="CATEGORIES[cat]"
+    v-if="meta"
     :style="{
       width: `${size ?? 40}px`,
       height: `${size ?? 40}px`,
       borderRadius: '10px',
-      background: `oklch(from var(${CATEGORIES[cat].token}) l c h / 0.16)`,
-      color: `var(${CATEGORIES[cat].token})`,
+      background: `oklch(from var(${meta.token}) l c h / 0.16)`,
+      color: `var(${meta.token})`,
       display: 'grid',
       placeItems: 'center',
       flexShrink: 0
     }"
   >
     <UIcon
-      :name="CATEGORIES[cat].icon"
+      :name="meta.icon"
       :style="{ width: `${(size ?? 40) * 0.45}px`, height: `${(size ?? 40) * 0.45}px` }"
     />
   </div>

@@ -35,7 +35,7 @@ const CATEGORY_BASE: Record<CategoryKey, Omit<CategoryMeta, 'label'> & { key: Ca
 export function useCategories() {
   const { t } = useI18n()
 
-  const CATEGORIES = computed<Record<CategoryKey, CategoryMeta>>(() => ({
+  const CATEGORIES = computed<Record<string, CategoryMeta>>(() => ({
     FOOD: { ...CATEGORY_BASE.FOOD, label: t('categories.FOOD') },
     SUBSCRIPTION: { ...CATEGORY_BASE.SUBSCRIPTION, label: t('categories.SUBSCRIPTION') },
     LEISURE: { ...CATEGORY_BASE.LEISURE, label: t('categories.LEISURE') },
@@ -54,7 +54,7 @@ export function useCategories() {
 }
 
 // Legacy export for backwards compatibility (uses Portuguese by default)
-export const CATEGORIES: Record<CategoryKey, CategoryMeta> = {
+export const CATEGORIES: Record<string, CategoryMeta> = {
   FOOD: { key: 'FOOD', label: 'Alimentação', token: '--cat-food', icon: 'lucide:shopping-bag' },
   SUBSCRIPTION: { key: 'SUBSCRIPTION', label: 'Assinatura', token: '--cat-subscription', icon: 'lucide:play' },
   LEISURE: { key: 'LEISURE', label: 'Lazer', token: '--cat-leisure', icon: 'lucide:sparkles' },

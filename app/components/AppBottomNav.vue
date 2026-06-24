@@ -1,8 +1,14 @@
 <script setup lang="ts">
-defineProps<{
-  items: { icon: string, label: string, to: string }[]
+type NavItem = { icon: string, label: string, to: string }
+
+const props = defineProps<{
+  items: NavItem[]
   isActive: (to: string) => boolean
 }>()
+
+// The bottom nav always receives the 5 primary nav items; expose them as a tuple
+// so fixed-index access (navItems[0]..[4]) is known-defined for the template.
+const navItems = computed(() => props.items as [NavItem, NavItem, NavItem, NavItem, NavItem])
 
 const { t } = useI18n()
 const showExpenseModal = useState('showExpenseModal', () => false)
@@ -32,24 +38,24 @@ function openMenu() {
 
     <!-- First nav item -->
     <NuxtLink
-      :to="items[0].to"
+      :to="navItems[0].to"
       class="nav-btn"
     >
       <div
         class="nav-btn-content"
-        :class="{ active: isActive(items[0].to) }"
+        :class="{ active: isActive(navItems[0].to) }"
       >
         <div class="nav-icon-wrapper">
           <UIcon
-            :name="items[0].icon"
+            :name="navItems[0].icon"
             class="w-5 h-5"
           />
           <div
-            v-if="isActive(items[0].to)"
+            v-if="isActive(navItems[0].to)"
             class="active-indicator"
           />
         </div>
-        <span class="nav-label">{{ items[0].label }}</span>
+        <span class="nav-label">{{ navItems[0].label }}</span>
       </div>
     </NuxtLink>
 
@@ -68,47 +74,47 @@ function openMenu() {
 
     <!-- Second nav item -->
     <NuxtLink
-      :to="items[1].to"
+      :to="navItems[1].to"
       class="nav-btn"
     >
       <div
         class="nav-btn-content"
-        :class="{ active: isActive(items[1].to) }"
+        :class="{ active: isActive(navItems[1].to) }"
       >
         <div class="nav-icon-wrapper">
           <UIcon
-            :name="items[1].icon"
+            :name="navItems[1].icon"
             class="w-5 h-5"
           />
           <div
-            v-if="isActive(items[1].to)"
+            v-if="isActive(navItems[1].to)"
             class="active-indicator"
           />
         </div>
-        <span class="nav-label">{{ items[1].label }}</span>
+        <span class="nav-label">{{ navItems[1].label }}</span>
       </div>
     </NuxtLink>
 
     <!-- Settings button (right) -->
     <NuxtLink
-      :to="items[4].to"
+      :to="navItems[4].to"
       class="nav-btn"
     >
       <div
         class="nav-btn-content"
-        :class="{ active: isActive(items[4].to) }"
+        :class="{ active: isActive(navItems[4].to) }"
       >
         <div class="nav-icon-wrapper">
           <UIcon
-            :name="items[4].icon"
+            :name="navItems[4].icon"
             class="w-5 h-5"
           />
           <div
-            v-if="isActive(items[4].to)"
+            v-if="isActive(navItems[4].to)"
             class="active-indicator"
           />
         </div>
-        <span class="nav-label">{{ items[4].label }}</span>
+        <span class="nav-label">{{ navItems[4].label }}</span>
       </div>
     </NuxtLink>
   </nav>
