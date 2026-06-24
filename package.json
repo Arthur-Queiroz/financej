@@ -34,11 +34,8 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
-    "@nuxt/test-utils": "^4.0.3",
     "@types/pg": "^8.20.0",
-    "@vue/test-utils": "^2.4.11",
     "eslint": "^10.4.0",
-    "happy-dom": "^20.10.6",
     "prisma": "^7.8.0",
     "sharp": "^0.34.5",
     "typescript": "^6.0.3",
