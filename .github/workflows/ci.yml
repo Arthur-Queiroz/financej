@@ -47,6 +47,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      # `vercel build` installs the project with pnpm, so pnpm must be on PATH.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
