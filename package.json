@@ -8,7 +8,10 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@clerk/nuxt": "2.5.2",
@@ -36,6 +39,7 @@
     "eslint": "^10.4.0",
     "prisma": "^7.8.0",
     "typescript": "^6.0.3",
+    "vitest": "^4.1.9",
     "vue-tsc": "^3.3.0"
   },
   "packageManager": "pnpm@11.1.3"
