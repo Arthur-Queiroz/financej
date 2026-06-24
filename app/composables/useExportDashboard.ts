@@ -1,5 +1,4 @@
 import type { Expense } from '@prisma/client'
-import { CATEGORIES } from '~/utils/categories'
 import { fmtBRL } from '~/utils/format'
 
 interface CategoryBreakdown {
@@ -20,8 +19,6 @@ export const useExportDashboard = () => {
   const { t } = useI18n()
   const toast = useToast()
 
-  // Fixed export color (corporate blue)
-  const PRIMARY_COLOR = [37, 99, 235] as const // RGB
   const TEXT_COLOR = [17, 24, 39] as const
   const GRAY_COLOR = [107, 114, 128] as const
   const NEGATIVE_COLOR = [239, 68, 68] as const
@@ -29,23 +26,23 @@ export const useExportDashboard = () => {
 
   // Chart colors palette (distinct colors for pie chart)
   const CHART_COLORS = [
-    [37, 99, 235],   // Blue
-    [16, 185, 129],  // Green
-    [245, 158, 11],  // Amber
-    [239, 68, 68],   // Red
-    [139, 92, 246],  // Purple
-    [236, 72, 153],  // Pink
-    [6, 182, 212],   // Cyan
-    [251, 146, 60],  // Orange
-    [34, 197, 94],   // Light Green
-    [168, 85, 247],  // Violet
+    [37, 99, 235], // Blue
+    [16, 185, 129], // Green
+    [245, 158, 11], // Amber
+    [239, 68, 68], // Red
+    [139, 92, 246], // Purple
+    [236, 72, 153], // Pink
+    [6, 182, 212], // Cyan
+    [251, 146, 60], // Orange
+    [34, 197, 94], // Light Green
+    [168, 85, 247] // Violet
   ] as const
 
   async function exportDashboardToPDF(
     summary: DashboardSummary | null,
     expenses: Expense[] | null,
     periodLabel: string,
-    dateRange: { from: string; to: string }
+    dateRange: { from: string, to: string }
   ) {
     try {
       // Show loading toast
@@ -257,7 +254,6 @@ export const useExportDashboard = () => {
 
         // Show all expenses (not just 10)
         expenses.forEach((exp, idx) => {
-          const categoryInfo = CATEGORIES[exp.category]
           const expDate = new Date(exp.date).toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'short'

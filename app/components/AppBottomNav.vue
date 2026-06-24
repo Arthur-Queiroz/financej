@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  items: { icon: string; label: string; to: string }[]
+  items: { icon: string, label: string, to: string }[]
   isActive: (to: string) => boolean
 }>()
 
@@ -22,7 +22,10 @@ function openMenu() {
       @click="openMenu"
     >
       <div class="nav-btn-content">
-        <UIcon name="lucide:menu" class="w-5 h-5" />
+        <UIcon
+          name="lucide:menu"
+          class="w-5 h-5"
+        />
         <span class="nav-label">{{ t('nav.menu') }}</span>
       </div>
     </button>
@@ -34,11 +37,17 @@ function openMenu() {
     >
       <div
         class="nav-btn-content"
-        :class="{ 'active': isActive(items[0].to) }"
+        :class="{ active: isActive(items[0].to) }"
       >
         <div class="nav-icon-wrapper">
-          <UIcon :name="items[0].icon" class="w-5 h-5" />
-          <div v-if="isActive(items[0].to)" class="active-indicator" />
+          <UIcon
+            :name="items[0].icon"
+            class="w-5 h-5"
+          />
+          <div
+            v-if="isActive(items[0].to)"
+            class="active-indicator"
+          />
         </div>
         <span class="nav-label">{{ items[0].label }}</span>
       </div>
@@ -50,7 +59,10 @@ function openMenu() {
         class="fab"
         @click="showExpenseModal = true"
       >
-        <UIcon name="lucide:plus" class="w-6 h-6" />
+        <UIcon
+          name="lucide:plus"
+          class="w-6 h-6"
+        />
       </button>
     </div>
 
@@ -61,11 +73,17 @@ function openMenu() {
     >
       <div
         class="nav-btn-content"
-        :class="{ 'active': isActive(items[1].to) }"
+        :class="{ active: isActive(items[1].to) }"
       >
         <div class="nav-icon-wrapper">
-          <UIcon :name="items[1].icon" class="w-5 h-5" />
-          <div v-if="isActive(items[1].to)" class="active-indicator" />
+          <UIcon
+            :name="items[1].icon"
+            class="w-5 h-5"
+          />
+          <div
+            v-if="isActive(items[1].to)"
+            class="active-indicator"
+          />
         </div>
         <span class="nav-label">{{ items[1].label }}</span>
       </div>
@@ -78,11 +96,17 @@ function openMenu() {
     >
       <div
         class="nav-btn-content"
-        :class="{ 'active': isActive(items[4].to) }"
+        :class="{ active: isActive(items[4].to) }"
       >
         <div class="nav-icon-wrapper">
-          <UIcon :name="items[4].icon" class="w-5 h-5" />
-          <div v-if="isActive(items[4].to)" class="active-indicator" />
+          <UIcon
+            :name="items[4].icon"
+            class="w-5 h-5"
+          />
+          <div
+            v-if="isActive(items[4].to)"
+            class="active-indicator"
+          />
         </div>
         <span class="nav-label">{{ items[4].label }}</span>
       </div>

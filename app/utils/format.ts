@@ -7,7 +7,7 @@ function getCurrentLocale(): string {
 }
 
 // Helper to get current currency from cookie or default
-function getCurrentCurrency(): { code: string; symbol: string } {
+function getCurrentCurrency(): { code: string, symbol: string } {
   const currencies: Record<string, string> = {
     BRL: 'R$',
     USD: '$',

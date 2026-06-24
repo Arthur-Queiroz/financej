@@ -20,7 +20,7 @@ if (import.meta.client) {
             colorText: 'var(--ink)',
             colorInputBackground: 'var(--surface-2)',
             colorInputText: 'var(--ink)',
-            borderRadius: '14px',
+            borderRadius: '14px'
           }
         }"
         routing="hash"

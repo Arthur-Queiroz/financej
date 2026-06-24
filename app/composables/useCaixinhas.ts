@@ -21,20 +21,20 @@ export interface VaultDeposit {
 }
 
 export const VAULT_INTERVAL = {
-  WEEKLY:  { labelKey: 'savings.weekly',  shortKey: 'savings.per_week',  perYear: 52 },
+  WEEKLY: { labelKey: 'savings.weekly', shortKey: 'savings.per_week', perYear: 52 },
   MONTHLY: { labelKey: 'savings.monthly', shortKey: 'savings.per_month', perYear: 12 },
-  YEARLY:  { labelKey: 'savings.yearly',  shortKey: 'savings.per_year',  perYear: 1  },
+  YEARLY: { labelKey: 'savings.yearly', shortKey: 'savings.per_year', perYear: 1 }
 } as const
 
 export const VAULT_ICONS = [
-  { icon: 'lucide:shield',       labelKey: 'savings.icon_emergency' },
-  { icon: 'lucide:plane',        labelKey: 'savings.icon_travel' },
-  { icon: 'lucide:home',         labelKey: 'savings.icon_home' },
-  { icon: 'lucide:target',       labelKey: 'savings.icon_goal' },
-  { icon: 'lucide:gift',         labelKey: 'savings.icon_gift' },
-  { icon: 'lucide:trending-up',  labelKey: 'savings.icon_invest' },
-  { icon: 'lucide:book-open',    labelKey: 'savings.icon_study' },
-  { icon: 'lucide:shopping-bag', labelKey: 'savings.icon_shopping' },
+  { icon: 'lucide:shield', labelKey: 'savings.icon_emergency' },
+  { icon: 'lucide:plane', labelKey: 'savings.icon_travel' },
+  { icon: 'lucide:home', labelKey: 'savings.icon_home' },
+  { icon: 'lucide:target', labelKey: 'savings.icon_goal' },
+  { icon: 'lucide:gift', labelKey: 'savings.icon_gift' },
+  { icon: 'lucide:trending-up', labelKey: 'savings.icon_invest' },
+  { icon: 'lucide:book-open', labelKey: 'savings.icon_study' },
+  { icon: 'lucide:shopping-bag', labelKey: 'savings.icon_shopping' }
 ] as const
 
 export const VAULT_COLORS = [
@@ -43,12 +43,12 @@ export const VAULT_COLORS = [
   'oklch(0.78 0.16 290)',
   'oklch(0.78 0.2 25)',
   'oklch(0.85 0.2 145)',
-  'oklch(0.82 0.16 60)',
+  'oklch(0.82 0.16 60)'
 ] as const
 
 export const useCaixinhas = () => {
   const { data, pending, refresh } = useFetch<Vault[]>('/api/vaults', {
-    default: () => [],
+    default: () => []
   })
 
   const create = async (body: Omit<Vault, 'id' | 'current' | 'createdAt' | 'updatedAt'>) => {
@@ -66,12 +66,12 @@ export const useCaixinhas = () => {
     await refresh()
   }
 
-  const deposit = async (vaultId: string, body: { amount: number; note?: string; date: string }) => {
+  const deposit = async (vaultId: string, body: { amount: number, note?: string, date: string }) => {
     await $fetch(`/api/vaults/${vaultId}/deposit`, { method: 'POST', body })
     await refresh()
   }
 
-  const withdraw = async (vaultId: string, body: { amount: number; note?: string; date: string }) => {
+  const withdraw = async (vaultId: string, body: { amount: number, note?: string, date: string }) => {
     await $fetch(`/api/vaults/${vaultId}/withdraw`, { method: 'POST', body })
     await refresh()
   }

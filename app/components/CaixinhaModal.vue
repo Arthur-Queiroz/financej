@@ -63,7 +63,7 @@ async function submit() {
       color: color.value,
       target: target.value,
       perAmount: perAmount.value,
-      interval: interval.value,
+      interval: interval.value
     }
     if (isEditing.value) {
       await update(props.vault!.id, body)
@@ -75,7 +75,7 @@ async function submit() {
     emit('saved')
     open.value = false
   } catch (e: unknown) {
-    const msg = (e as { data?: { message?: string }; message?: string })?.data?.message
+    const msg = (e as { data?: { message?: string }, message?: string })?.data?.message
       ?? (e as { message?: string })?.message ?? 'Erro'
     toast.add({ title: t('savings.toast_error'), description: msg, color: 'error' })
   } finally {
@@ -100,13 +100,22 @@ function fmtAmount(n: number | null) {
           <!-- Header -->
           <div class="flex justify-between items-start mb-6">
             <div>
-              <div class="fm-label mb-1.5">{{ t('savings.new_reserve') }}</div>
+              <div class="fm-label mb-1.5">
+                {{ t('savings.new_reserve') }}
+              </div>
               <h2 style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin: 0;">
                 {{ isEditing ? t('savings.edit_title') : t('savings.create_title') }}
               </h2>
             </div>
-            <button class="fm-btn fm-btn--icon fm-btn--subtle" style="width: 32px; height: 32px;" @click="open = false">
-              <UIcon name="lucide:x" class="w-4 h-4" />
+            <button
+              class="fm-btn fm-btn--icon fm-btn--subtle"
+              style="width: 32px; height: 32px;"
+              @click="open = false"
+            >
+              <UIcon
+                name="lucide:x"
+                class="w-4 h-4"
+              />
             </button>
           </div>
 
@@ -117,7 +126,10 @@ function fmtAmount(n: number | null) {
               style="width: 52px; height: 52px; border-radius: 14px;"
               :style="{ background: `oklch(from ${color} l c h / 0.16)`, color }"
             >
-              <UIcon :name="icon" class="w-6 h-6" />
+              <UIcon
+                :name="icon"
+                class="w-6 h-6"
+              />
             </div>
             <div style="flex: 1;">
               <label class="fm-label mb-2">{{ t('savings.name') }}</label>
@@ -125,13 +137,15 @@ function fmtAmount(n: number | null) {
                 v-model="name"
                 class="fm-input"
                 :placeholder="t('savings.name_placeholder')"
-              />
+              >
             </div>
           </div>
 
           <!-- Icon picker -->
           <div class="mb-5">
-            <div class="fm-label mb-2.5">{{ t('savings.icon') }}</div>
+            <div class="fm-label mb-2.5">
+              {{ t('savings.icon') }}
+            </div>
             <div class="grid grid-cols-2 gap-2">
               <button
                 v-for="opt in VAULT_ICONS"
@@ -141,11 +155,14 @@ function fmtAmount(n: number | null) {
                   background: icon === opt.icon ? `oklch(from ${color} l c h / 0.16)` : 'var(--surface-2)',
                   border: `1px solid ${icon === opt.icon ? color : 'var(--border)'}`,
                   color: icon === opt.icon ? color : 'var(--ink-2)',
-                  fontFamily: 'var(--font-sans)',
+                  fontFamily: 'var(--font-sans)'
                 }"
                 @click="icon = opt.icon"
               >
-                <UIcon :name="opt.icon" class="w-4 h-4 shrink-0" />
+                <UIcon
+                  :name="opt.icon"
+                  class="w-4 h-4 shrink-0"
+                />
                 <span>{{ t(opt.labelKey) }}</span>
               </button>
             </div>
@@ -153,7 +170,9 @@ function fmtAmount(n: number | null) {
 
           <!-- Color picker -->
           <div class="mb-5">
-            <div class="fm-label mb-2.5">{{ t('savings.color') }}</div>
+            <div class="fm-label mb-2.5">
+              {{ t('savings.color') }}
+            </div>
             <div class="flex gap-2.5 flex-wrap">
               <button
                 v-for="c in VAULT_COLORS"
@@ -163,7 +182,7 @@ function fmtAmount(n: number | null) {
                 :style="{
                   background: c,
                   border: c === color ? '2px solid var(--ink)' : '1px solid var(--border)',
-                  boxShadow: c === color ? `0 0 0 3px oklch(from ${c} l c h / 0.28)` : 'none',
+                  boxShadow: c === color ? `0 0 0 3px oklch(from ${c} l c h / 0.28)` : 'none'
                 }"
                 @click="color = c"
               />
@@ -177,21 +196,29 @@ function fmtAmount(n: number | null) {
               <span style="text-transform: none; color: var(--ink-mute); letter-spacing: 0; font-weight: 400;">{{ t('savings.target_optional') }}</span>
             </label>
             <div class="relative">
-              <span class="mono absolute left-4 top-1/2 -translate-y-1/2 font-medium" style="color: var(--ink-3); font-size: 15px;">{{ currentCurrency?.symbol }}</span>
+              <span
+                class="mono absolute left-4 top-1/2 -translate-y-1/2 font-medium"
+                style="color: var(--ink-3); font-size: 15px;"
+              >{{ currentCurrency?.symbol }}</span>
               <input
                 v-model="targetStr"
                 class="fm-input"
                 style="padding-left: 46px;"
                 inputmode="decimal"
                 placeholder="0,00"
-              />
+              >
             </div>
           </div>
 
           <!-- Interval -->
           <div class="mb-5">
-            <div class="fm-label mb-2.5">{{ t('savings.interval') }}</div>
-            <div class="fm-tab-group" style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);">
+            <div class="fm-label mb-2.5">
+              {{ t('savings.interval') }}
+            </div>
+            <div
+              class="fm-tab-group"
+              style="width: 100%; display: grid; grid-template-columns: repeat(3, 1fr);"
+            >
               <span
                 v-for="[key, meta] in Object.entries(VAULT_INTERVAL)"
                 :key="key"
@@ -207,14 +234,17 @@ function fmtAmount(n: number | null) {
           <div class="mb-5">
             <label class="fm-label mb-2">{{ t('savings.per_amount') }} {{ t(intervalShortKey) }}</label>
             <div class="relative">
-              <span class="mono absolute left-4 top-1/2 -translate-y-1/2 font-medium" style="color: var(--ink-3); font-size: 22px;">{{ currentCurrency?.symbol }}</span>
+              <span
+                class="mono absolute left-4 top-1/2 -translate-y-1/2 font-medium"
+                style="color: var(--ink-3); font-size: 22px;"
+              >{{ currentCurrency?.symbol }}</span>
               <input
                 v-model="perAmountStr"
                 class="fm-input fm-input--big"
                 style="padding-left: 60px;"
                 inputmode="decimal"
                 placeholder="0,00"
-              />
+              >
             </div>
           </div>
 
@@ -228,7 +258,10 @@ function fmtAmount(n: number | null) {
               class="grid place-items-center shrink-0 rounded-xl"
               style="width: 36px; height: 36px; background: var(--accent); color: var(--accent-ink);"
             >
-              <UIcon name="lucide:trending-up" class="w-4 h-4" />
+              <UIcon
+                name="lucide:trending-up"
+                class="w-4 h-4"
+              />
             </div>
             <div style="font-size: 13px; color: var(--ink-2); line-height: 1.4;">
               {{ t('savings.projection', {
@@ -244,19 +277,38 @@ function fmtAmount(n: number | null) {
             class="flex gap-2 items-center mb-2 text-sm"
             style="color: var(--accent);"
           >
-            <UIcon name="lucide:party-popper" class="w-4 h-4" />
+            <UIcon
+              name="lucide:party-popper"
+              class="w-4 h-4"
+            />
             {{ t('savings.goal_reached') }}
           </div>
         </div>
 
         <!-- Footer -->
         <div class="vault-modal-footer">
-          <button class="fm-btn fm-btn--ghost" @click="open = false">{{ t('savings.cancel') }}</button>
-          <button class="fm-btn fm-btn--primary" :disabled="loading || !name || !perAmountStr" @click="submit">
-            <UIcon v-if="loading" name="lucide:loader-2" class="w-4 h-4 animate-spin" />
+          <button
+            class="fm-btn fm-btn--ghost"
+            @click="open = false"
+          >
+            {{ t('savings.cancel') }}
+          </button>
+          <button
+            class="fm-btn fm-btn--primary"
+            :disabled="loading || !name || !perAmountStr"
+            @click="submit"
+          >
+            <UIcon
+              v-if="loading"
+              name="lucide:loader-2"
+              class="w-4 h-4 animate-spin"
+            />
             <template v-else>
               {{ isEditing ? t('savings.save') : t('savings.create_title') }}
-              <UIcon name="lucide:check" class="w-4 h-4" />
+              <UIcon
+                name="lucide:check"
+                class="w-4 h-4"
+              />
             </template>
           </button>
         </div>

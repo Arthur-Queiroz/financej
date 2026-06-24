@@ -4,7 +4,7 @@ import { vi } from 'vitest'
 // We don't depend on `h3` here so the suite installs with only `vitest` and stays
 // isolated from framework internals. `createError` only needs to produce an Error
 // carrying `statusCode` and `message`, which is what the code asserts against.
-globalThis.createError = (input: { statusCode?: number; message?: string }) => {
+globalThis.createError = (input: { statusCode?: number, message?: string }) => {
   const err = new Error(input?.message) as Error & { statusCode?: number }
   err.statusCode = input?.statusCode
   return err

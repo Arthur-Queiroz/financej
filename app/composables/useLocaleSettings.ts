@@ -17,7 +17,7 @@ export const useLocaleSettings = () => {
   )
 
   const currentLocale = computed(() =>
-    locales.value.find((l: any) => l.code === locale.value)
+    locales.value.find((l: { code: string }) => l.code === locale.value)
   )
 
   const setLanguage = (code: string) => {

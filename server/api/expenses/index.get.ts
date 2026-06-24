@@ -1,3 +1,5 @@
+import type { ExpenseCategory } from '@prisma/client'
+
 export default defineEventHandler(async (event) => {
   const userId = await requireUserId(event)
   const { from, to, category } = getQuery(event)
@@ -13,7 +15,7 @@ export default defineEventHandler(async (event) => {
             }
           }
         : {}),
-      ...(category ? { category: category as string } : {})
+      ...(category ? { category: category as ExpenseCategory } : {})
     },
     orderBy: { date: 'desc' }
   })

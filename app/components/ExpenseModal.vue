@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const emit = defineEmits<{ close: []; saved: [] }>()
+const emit = defineEmits<{ close: [], saved: [] }>()
 const open = defineModel<boolean>()
 
 const { t } = useI18n()
@@ -36,7 +36,7 @@ async function submit() {
       open.value = false
     }
   } catch (e: unknown) {
-    const msg = (e as { data?: { message?: string }; message?: string })?.data?.message
+    const msg = (e as { data?: { message?: string }, message?: string })?.data?.message
       ?? (e as { message?: string })?.message
       ?? 'Erro desconhecido'
     toast.add({ title: t('expense.toast_error'), description: msg, color: 'error' })
@@ -48,84 +48,126 @@ async function submit() {
 </script>
 
 <template>
-  <UModal v-model:open="open" :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[90vw] md:max-w-[640px] max-h-[90vh] overflow-hidden flex flex-col' }">
+  <UModal
+    v-model:open="open"
+    :ui="{ content: 'rounded-3xl shadow-[--shadow-pop] p-0 max-w-[90vw] md:max-w-[640px] max-h-[90vh] overflow-hidden flex flex-col' }"
+  >
     <template #content>
       <div class="expense-modal-container">
         <div class="expense-modal-scroll-area">
-        <!-- Header -->
-        <div class="flex justify-between items-start mb-6">
-          <div>
-            <div class="fm-label mb-1.5">{{ t('expense.new_entry') }}</div>
-            <h2 style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin: 0;">{{ t('expense.title') }}</h2>
+          <!-- Header -->
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <div class="fm-label mb-1.5">
+                {{ t('expense.new_entry') }}
+              </div>
+              <h2 style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); margin: 0;">
+                {{ t('expense.title') }}
+              </h2>
+            </div>
+            <button
+              class="fm-btn fm-btn--icon fm-btn--subtle"
+              style="width: 32px; height: 32px;"
+              @click="open = false"
+            >
+              <UIcon
+                name="lucide:x"
+                class="w-4 h-4"
+              />
+            </button>
           </div>
-          <button class="fm-btn fm-btn--icon fm-btn--subtle" style="width: 32px; height: 32px;" @click="open = false">
-            <UIcon name="lucide:x" class="w-4 h-4" />
-          </button>
-        </div>
 
-        <!-- Amount -->
-        <div class="mb-5">
-          <label class="fm-label mb-2">{{ t('expense.amount') }}</label>
-          <div class="relative">
-            <span class="mono absolute left-4 top-1/2 -translate-y-1/2 font-medium" style="color: var(--ink-3); font-size: 22px;">{{ currentCurrency?.symbol }}</span>
-            <input
-              v-model="amount"
-              class="fm-input fm-input--big"
-              style="padding-left: 60px;"
-              :placeholder="t('expense.amount_placeholder')"
-              inputmode="decimal"
+          <!-- Amount -->
+          <div class="mb-5">
+            <label class="fm-label mb-2">{{ t('expense.amount') }}</label>
+            <div class="relative">
+              <span
+                class="mono absolute left-4 top-1/2 -translate-y-1/2 font-medium"
+                style="color: var(--ink-3); font-size: 22px;"
+              >{{ currentCurrency?.symbol }}</span>
+              <input
+                v-model="amount"
+                class="fm-input fm-input--big"
+                style="padding-left: 60px;"
+                :placeholder="t('expense.amount_placeholder')"
+                inputmode="decimal"
+              >
+            </div>
+          </div>
+
+          <!-- Date + Category selects -->
+          <div class="grid grid-cols-2 gap-3 mb-5">
+            <div>
+              <label class="fm-label mb-2">{{ t('expense.date') }}</label>
+              <input
+                v-model="date"
+                type="date"
+                class="fm-input"
+              >
+            </div>
+            <div>
+              <label class="fm-label mb-2">{{ t('expense.category') }}</label>
+              <select
+                v-model="category"
+                class="fm-input"
+              >
+                <option
+                  v-for="cat in CATEGORY_LIST"
+                  :key="cat.key"
+                  :value="cat.key"
+                >
+                  {{ cat.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category quick picker -->
+          <div class="mb-5">
+            <div class="fm-label mb-2.5">
+              {{ t('expense.shortcut') }}
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              <button
+                v-for="cat in CATEGORY_LIST"
+                :key="cat.key"
+                class="flex items-center gap-1.5 px-2.5 py-2.5 rounded-xl text-[11px] sm:text-xs font-medium text-left transition-all"
+                :style="{
+                  background: category === cat.key ? `oklch(from var(${cat.token}) l c h / 0.18)` : 'var(--surface-2)',
+                  border: `1px solid ${category === cat.key ? `var(${cat.token})` : 'var(--border)'}`,
+                  color: category === cat.key ? `var(${cat.token})` : 'var(--ink-2)',
+                  fontFamily: 'var(--font-sans)'
+                }"
+                @click="category = cat.key"
+              >
+                <UIcon
+                  :name="cat.icon"
+                  class="w-3.5 h-3.5 shrink-0"
+                />
+                <span class="truncate text-[11px] sm:text-xs">{{ cat.label }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-6">
+            <label class="fm-label mb-2">
+              {{ t('expense.description') }} <span style="text-transform: none; color: var(--ink-mute); letter-spacing: 0; font-weight: 400;">{{ t('expense.optional') }}</span>
+            </label>
+            <textarea
+              v-model="description"
+              class="fm-input fm-textarea"
+              :placeholder="t('expense.description_placeholder')"
             />
           </div>
         </div>
 
-        <!-- Date + Category selects -->
-        <div class="grid grid-cols-2 gap-3 mb-5">
-          <div>
-            <label class="fm-label mb-2">{{ t('expense.date') }}</label>
-            <input v-model="date" type="date" class="fm-input" />
-          </div>
-          <div>
-            <label class="fm-label mb-2">{{ t('expense.category') }}</label>
-            <select v-model="category" class="fm-input">
-              <option v-for="cat in CATEGORY_LIST" :key="cat.key" :value="cat.key">{{ cat.label }}</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Category quick picker -->
-        <div class="mb-5">
-          <div class="fm-label mb-2.5">{{ t('expense.shortcut') }}</div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            <button
-              v-for="cat in CATEGORY_LIST"
-              :key="cat.key"
-              class="flex items-center gap-1.5 px-2.5 py-2.5 rounded-xl text-[11px] sm:text-xs font-medium text-left transition-all"
-              :style="{
-                background: category === cat.key ? `oklch(from var(${cat.token}) l c h / 0.18)` : 'var(--surface-2)',
-                border: `1px solid ${category === cat.key ? `var(${cat.token})` : 'var(--border)'}`,
-                color: category === cat.key ? `var(${cat.token})` : 'var(--ink-2)',
-                fontFamily: 'var(--font-sans)',
-              }"
-              @click="category = cat.key"
-            >
-              <UIcon :name="cat.icon" class="w-3.5 h-3.5 shrink-0" />
-              <span class="truncate text-[11px] sm:text-xs">{{ cat.label }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Description -->
-        <div class="mb-6">
-          <label class="fm-label mb-2">
-            {{ t('expense.description') }} <span style="text-transform: none; color: var(--ink-mute); letter-spacing: 0; font-weight: 400;">{{ t('expense.optional') }}</span>
-          </label>
-          <textarea v-model="description" class="fm-input fm-textarea" :placeholder="t('expense.description_placeholder')" />
-        </div>
-        </div>
-
         <!-- Footer (fixed at bottom) -->
         <div class="expense-modal-footer">
-          <label class="flex items-center gap-2 text-sm cursor-pointer select-none" style="color: var(--ink-2);">
+          <label
+            class="flex items-center gap-2 text-sm cursor-pointer select-none"
+            style="color: var(--ink-2);"
+          >
             <span
               class="relative inline-block rounded-full"
               style="width: 36px; height: 22px; background: var(--surface-3);"
@@ -140,10 +182,28 @@ async function submit() {
             <span class="hidden sm:inline">{{ t('expense.keep_adding') }}</span>
           </label>
           <div class="flex gap-2.5">
-            <button class="fm-btn fm-btn--ghost" @click="open = false">{{ t('expense.cancel') }}</button>
-            <button class="fm-btn fm-btn--primary" :disabled="loading" @click="submit">
-              <UIcon v-if="loading" name="lucide:loader-2" class="w-4 h-4 animate-spin" />
-              <template v-else>{{ t('expense.save') }} <UIcon name="lucide:check" class="w-4 h-4" /></template>
+            <button
+              class="fm-btn fm-btn--ghost"
+              @click="open = false"
+            >
+              {{ t('expense.cancel') }}
+            </button>
+            <button
+              class="fm-btn fm-btn--primary"
+              :disabled="loading"
+              @click="submit"
+            >
+              <UIcon
+                v-if="loading"
+                name="lucide:loader-2"
+                class="w-4 h-4 animate-spin"
+              />
+              <template v-else>
+                {{ t('expense.save') }} <UIcon
+                  name="lucide:check"
+                  class="w-4 h-4"
+                />
+              </template>
             </button>
           </div>
         </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps<{
-  data: { value: number; color: string }[]
+  data: { value: number, color: string }[]
   size?: number
   thickness?: number
 }>()
@@ -29,9 +29,15 @@ const cy = computed(() => size.value / 2)
 </script>
 
 <template>
-  <svg :width="size" :height="size" :viewBox="`0 0 ${size} ${size}`">
+  <svg
+    :width="size"
+    :height="size"
+    :viewBox="`0 0 ${size} ${size}`"
+  >
     <circle
-      :cx="cx" :cy="cy" :r="segments[0]?.r ?? 70"
+      :cx="cx"
+      :cy="cy"
+      :r="segments[0]?.r ?? 70"
       fill="none"
       stroke="var(--surface-2)"
       :stroke-width="thickness"
@@ -39,7 +45,9 @@ const cy = computed(() => size.value / 2)
     <circle
       v-for="(seg, i) in segments"
       :key="i"
-      :cx="cx" :cy="cy" :r="seg.r"
+      :cx="cx"
+      :cy="cy"
+      :r="seg.r"
       fill="none"
       :stroke="seg.color"
       :stroke-width="thickness"

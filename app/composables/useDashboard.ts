@@ -12,7 +12,7 @@ interface DashboardSummary {
   byCategory: CategoryBreakdown[]
 }
 
-export const useDashboard = (dates: Ref<{ from: string; to: string }>) => {
+export const useDashboard = (dates: Ref<{ from: string, to: string }>) => {
   const { data, pending, refresh } = useFetch<DashboardSummary>('/api/dashboard/summary', {
     query: computed(() => ({ from: dates.value.from, to: dates.value.to })),
     default: () => null,
