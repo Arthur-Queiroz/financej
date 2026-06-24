@@ -3,12 +3,12 @@ const route = useRoute()
 const { t } = useI18n()
 
 const navItems = computed(() => [
-  { icon: 'lucide:pie-chart',         label: t('nav.dashboard'),  to: '/dashboard' },
-  { icon: 'lucide:list',              label: t('nav.expenses'),   to: '/expenses' },
-  { icon: 'lucide:wallet',            label: t('nav.incomes'),    to: '/settings/income' },
-  { icon: 'lucide:piggy-bank',        label: t('nav.savings'),    to: '/savings' },
-  { icon: 'lucide:file-spreadsheet',  label: t('nav.export'),     to: '/export' },
-  { icon: 'lucide:settings',          label: t('nav.settings'),   to: '/settings' },
+  { icon: 'lucide:pie-chart', label: t('nav.dashboard'), to: '/dashboard' },
+  { icon: 'lucide:list', label: t('nav.expenses'), to: '/expenses' },
+  { icon: 'lucide:wallet', label: t('nav.incomes'), to: '/settings/income' },
+  { icon: 'lucide:piggy-bank', label: t('nav.savings'), to: '/savings' },
+  { icon: 'lucide:file-spreadsheet', label: t('nav.export'), to: '/export' },
+  { icon: 'lucide:settings', label: t('nav.settings'), to: '/settings' }
 ])
 
 function isActive(to: string) {
@@ -25,7 +25,6 @@ function isActive(to: string) {
 
 <template>
   <div class="dash-shell fm-app">
-
     <!-- Desktop sidebar -->
     <aside class="dash-sidebar">
       <div style="padding: 0 8px;">
@@ -47,7 +46,10 @@ function isActive(to: string) {
             v-if="isActive(item.to)"
             class="dash-nav-indicator"
           />
-          <UIcon :name="item.icon" style="width: 16px; height: 16px; flex-shrink: 0;" />
+          <UIcon
+            :name="item.icon"
+            style="width: 16px; height: 16px; flex-shrink: 0;"
+          />
           <span>{{ item.label }}</span>
         </NuxtLink>
       </nav>
@@ -60,7 +62,10 @@ function isActive(to: string) {
     <!-- Main content -->
     <main class="dash-main">
       <slot />
-      <AppBottomNav :items="navItems" :is-active="isActive" />
+      <AppBottomNav
+        :items="navItems"
+        :is-active="isActive"
+      />
     </main>
 
     <!-- Mobile Menu Drawer -->

@@ -36,11 +36,21 @@ async function submit() {
 </script>
 
 <template>
-  <div class="flex flex-col h-dvh" style="background: var(--bg); color: var(--ink);">
+  <div
+    class="flex flex-col h-dvh"
+    style="background: var(--bg); color: var(--ink);"
+  >
     <!-- App bar -->
     <div class="flex items-center gap-3 px-5 py-3 pt-safe">
-      <button class="fm-btn fm-btn--icon fm-btn--subtle" style="width: 36px; height: 36px;" @click="router.back()">
-        <UIcon name="lucide:chevron-left" class="w-5 h-5" />
+      <button
+        class="fm-btn fm-btn--icon fm-btn--subtle"
+        style="width: 36px; height: 36px;"
+        @click="router.back()"
+      >
+        <UIcon
+          name="lucide:chevron-left"
+          class="w-5 h-5"
+        />
       </button>
       <span style="font-size: 16px; font-weight: 600;">{{ t('expense.new') }}</span>
     </div>
@@ -48,8 +58,13 @@ async function submit() {
     <div class="flex-1 overflow-y-auto px-5 pb-4">
       <!-- Big amount display -->
       <div class="text-center py-8">
-        <div class="fm-label mb-2">{{ t('expense.amount') }}</div>
-        <div class="mono inline-flex items-baseline gap-2" style="font-size: 48px; font-weight: 500; letter-spacing: -0.03em;">
+        <div class="fm-label mb-2">
+          {{ t('expense.amount') }}
+        </div>
+        <div
+          class="mono inline-flex items-baseline gap-2"
+          style="font-size: 48px; font-weight: 500; letter-spacing: -0.03em;"
+        >
           <span style="font-size: 20px; color: var(--ink-3);">{{ currentCurrency?.symbol }}</span>
           <input
             v-model="amount"
@@ -57,13 +72,15 @@ async function submit() {
             style="font-size: 48px; font-weight: 500; font-family: var(--font-mono); color: var(--ink);"
             :placeholder="t('expense.amount_placeholder')"
             inputmode="decimal"
-          />
+          >
         </div>
       </div>
 
       <!-- Category grid -->
       <div class="mb-5">
-        <div class="fm-label mb-2.5">{{ t('expense.category') }}</div>
+        <div class="fm-label mb-2.5">
+          {{ t('expense.category') }}
+        </div>
         <div class="grid grid-cols-4 gap-1.5">
           <button
             v-for="cat in CATEGORY_LIST"
@@ -72,7 +89,7 @@ async function submit() {
             :style="{
               background: category === cat.key ? `oklch(from var(${cat.token}) l c h / 0.16)` : 'transparent',
               border: `1px solid ${category === cat.key ? `var(${cat.token})` : 'var(--border)'}`,
-              fontFamily: 'var(--font-sans)',
+              fontFamily: 'var(--font-sans)'
             }"
             @click="category = cat.key"
           >
@@ -83,9 +100,15 @@ async function submit() {
                 color: category === cat.key ? 'var(--accent-ink)' : `var(${cat.token})`
               }"
             >
-              <UIcon :name="cat.icon" class="w-3.5 h-3.5" />
+              <UIcon
+                :name="cat.icon"
+                class="w-3.5 h-3.5"
+              />
             </div>
-            <span class="text-[10px] text-center leading-tight" style="color: var(--ink-2);">{{ cat.label }}</span>
+            <span
+              class="text-[10px] text-center leading-tight"
+              style="color: var(--ink-2);"
+            >{{ cat.label }}</span>
           </button>
         </div>
       </div>
@@ -93,25 +116,45 @@ async function submit() {
       <!-- Date -->
       <div class="mb-4">
         <label class="fm-label mb-2">{{ t('expense.date') }}</label>
-        <input v-model="date" type="date" class="fm-input" />
+        <input
+          v-model="date"
+          type="date"
+          class="fm-input"
+        >
       </div>
 
       <!-- Description -->
       <div>
         <label class="fm-label mb-2">{{ t('expense.description') }} <span style="text-transform: none; color: var(--ink-mute); font-weight: 400; letter-spacing: 0;">{{ t('expense.optional') }}</span></label>
-        <textarea v-model="description" class="fm-input fm-textarea" :placeholder="t('expense.description_placeholder')" />
+        <textarea
+          v-model="description"
+          class="fm-input fm-textarea"
+          :placeholder="t('expense.description_placeholder')"
+        />
       </div>
     </div>
 
     <!-- Sticky bottom -->
-    <div class="px-5 py-4 pb-safe-or-4" style="border-top: 1px solid var(--border); background: var(--bg);">
+    <div
+      class="px-5 py-4 pb-safe-or-4"
+      style="border-top: 1px solid var(--border); background: var(--bg);"
+    >
       <button
         class="fm-btn fm-btn--primary fm-btn--lg w-full"
         :disabled="loading || !amount"
         @click="submit"
       >
-        <UIcon v-if="loading" name="lucide:loader-2" class="w-4 h-4 animate-spin" />
-        <template v-else>{{ t('expense.save') }} <UIcon name="lucide:check" class="w-4 h-4" /></template>
+        <UIcon
+          v-if="loading"
+          name="lucide:loader-2"
+          class="w-4 h-4 animate-spin"
+        />
+        <template v-else>
+          {{ t('expense.save') }} <UIcon
+            name="lucide:check"
+            class="w-4 h-4"
+          />
+        </template>
       </button>
     </div>
   </div>

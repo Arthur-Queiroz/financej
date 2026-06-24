@@ -1,4 +1,4 @@
-export const useExpenses = (dates: Ref<{ from: string; to: string }>) => {
+export const useExpenses = (dates: Ref<{ from: string, to: string }>) => {
   const { data, pending, refresh } = useFetch('/api/expenses', {
     query: computed(() => ({ from: dates.value.from, to: dates.value.to })),
     default: () => [],
@@ -15,7 +15,7 @@ export const useExpenses = (dates: Ref<{ from: string; to: string }>) => {
     await refresh()
   }
 
-  const update = async (id: string, body: Partial<{ amount: number; category: string; description: string; date: string }>) => {
+  const update = async (id: string, body: Partial<{ amount: number, category: string, description: string, date: string }>) => {
     await $fetch(`/api/expenses/${id}`, { method: 'PUT', body })
     await refresh()
   }

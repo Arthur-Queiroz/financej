@@ -77,7 +77,7 @@ export default defineEventHandler(async (event) => {
   })
 
   // Add borders
-  summary.eachRow((row, rowNumber) => {
+  summary.eachRow((row) => {
     row.eachCell((cell) => {
       cell.border = {
         top: { style: 'thin', color: { argb: 'FFD1D5DB' } },

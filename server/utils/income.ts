@@ -22,15 +22,15 @@ function prorateMonthly(amount: number, overlapStart: Date, overlapEnd: Date): n
     const y = cursor.getUTCFullYear()
     const m = cursor.getUTCMonth()
     const monthStart = new Date(Date.UTC(y, m, 1))
-    const monthEnd   = new Date(Date.UTC(y, m + 1, 0))   // last day of month
+    const monthEnd = new Date(Date.UTC(y, m + 1, 0)) // last day of month
     const daysInMonth = monthEnd.getUTCDate()
 
     const sliceStart = overlapStart > monthStart ? overlapStart : monthStart
-    const sliceEnd   = overlapEnd  < monthEnd   ? overlapEnd   : monthEnd
+    const sliceEnd = overlapEnd < monthEnd ? overlapEnd : monthEnd
     const days = Math.floor((sliceEnd.getTime() - sliceStart.getTime()) / 86_400_000) + 1
 
     total += (amount / daysInMonth) * days
-    cursor = new Date(Date.UTC(y, m + 1, 1))  // first day of next month
+    cursor = new Date(Date.UTC(y, m + 1, 1)) // first day of next month
   }
 
   return total
@@ -39,12 +39,12 @@ function prorateMonthly(amount: number, overlapStart: Date, overlapEnd: Date): n
 export function prorateIncome(incomes: IncomeRecord[], fromDate: Date, toDate: Date): number {
   return incomes.reduce((total, income) => {
     const start = income.effectiveFrom
-    const end   = income.effectiveTo ?? toDate
+    const end = income.effectiveTo ?? toDate
 
     if (start > toDate || end < fromDate) return total
 
     const overlapStart = start > fromDate ? start : fromDate
-    const overlapEnd   = end   < toDate   ? end   : toDate
+    const overlapEnd = end < toDate ? end : toDate
 
     if (income.recurrence === 'ONE_TIME') {
       return start >= fromDate && start <= toDate ? total + Number(income.amount) : total
@@ -54,7 +54,7 @@ export function prorateIncome(incomes: IncomeRecord[], fromDate: Date, toDate: D
       return total + prorateMonthly(Number(income.amount), overlapStart, overlapEnd)
     }
 
-    const days  = Math.floor((overlapEnd.getTime() - overlapStart.getTime()) / 86_400_000) + 1
+    const days = Math.floor((overlapEnd.getTime() - overlapStart.getTime()) / 86_400_000) + 1
     const daily = Number(income.amount) / (DAYS_PER_PERIOD[income.recurrence] ?? 7)
     return total + daily * days
   }, 0)

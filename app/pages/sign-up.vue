@@ -6,7 +6,10 @@ if (import.meta.client) {
 </script>
 
 <template>
-  <div class="min-h-dvh grid place-items-center" style="background: var(--bg);">
+  <div
+    class="min-h-dvh grid place-items-center"
+    style="background: var(--bg);"
+  >
     <div class="w-full max-w-sm px-4 flex flex-col items-center gap-6">
       <AppLogo :size="22" />
       <SignUp
@@ -17,7 +20,7 @@ if (import.meta.client) {
             colorText: 'var(--ink)',
             colorInputBackground: 'var(--surface-2)',
             colorInputText: 'var(--ink)',
-            borderRadius: '14px',
+            borderRadius: '14px'
           }
         }"
         routing="hash"

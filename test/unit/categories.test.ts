@@ -17,13 +17,13 @@ describe('CATEGORIES', () => {
   })
 
   it('all tokens follow --cat-* pattern', () => {
-    for (const [key, cat] of Object.entries(CATEGORIES)) {
+    for (const [, cat] of Object.entries(CATEGORIES)) {
       expect(cat.token).toMatch(/^--cat-/)
     }
   })
 
   it('all icons follow lucide:* pattern', () => {
-    for (const [key, cat] of Object.entries(CATEGORIES)) {
+    for (const [, cat] of Object.entries(CATEGORIES)) {
       expect(cat.icon).toMatch(/^lucide:/)
     }
   })

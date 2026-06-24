@@ -1,11 +1,16 @@
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
+}
+
 export const usePwaInstall = () => {
   const canInstall = ref(false)
-  const deferredPrompt = ref<any>(null)
+  const deferredPrompt = ref<BeforeInstallPromptEvent | null>(null)
 
   if (import.meta.client) {
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault()
-      deferredPrompt.value = e
+      deferredPrompt.value = e as BeforeInstallPromptEvent
       canInstall.value = true
     })
 

@@ -17,11 +17,18 @@ async function onInstall() {
 <template>
   <Teleport to="body">
     <Transition name="pwa-banner">
-      <div v-if="canInstall && visible" class="pwa-banner">
+      <div
+        v-if="canInstall && visible"
+        class="pwa-banner"
+      >
         <div class="pwa-banner-content">
           <div>
-            <p class="pwa-banner-title">{{ t('pwa.install_title') }}</p>
-            <p class="pwa-banner-desc">{{ t('pwa.install_description') }}</p>
+            <p class="pwa-banner-title">
+              {{ t('pwa.install_title') }}
+            </p>
+            <p class="pwa-banner-desc">
+              {{ t('pwa.install_description') }}
+            </p>
           </div>
           <div class="pwa-banner-actions">
             <UButton

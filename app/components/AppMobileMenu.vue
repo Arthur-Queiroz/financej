@@ -1,17 +1,16 @@
 <script setup lang="ts">
-const { user } = useUser()
 const { t } = useI18n()
 const route = useRoute()
 
 const mobileMenuOpen = useState('mobileMenuOpen', () => false)
 
 const navItems = computed(() => [
-  { icon: 'lucide:pie-chart',         label: t('nav.dashboard'),  to: '/dashboard' },
-  { icon: 'lucide:list',              label: t('nav.expenses'),   to: '/expenses' },
-  { icon: 'lucide:wallet',            label: t('nav.incomes'),    to: '/settings/income' },
-  { icon: 'lucide:piggy-bank',        label: t('nav.savings'),    to: '/savings' },
-  { icon: 'lucide:file-spreadsheet',  label: t('nav.export'),     to: '/export' },
-  { icon: 'lucide:settings',          label: t('nav.settings'),   to: '/settings' },
+  { icon: 'lucide:pie-chart', label: t('nav.dashboard'), to: '/dashboard' },
+  { icon: 'lucide:list', label: t('nav.expenses'), to: '/expenses' },
+  { icon: 'lucide:wallet', label: t('nav.incomes'), to: '/settings/income' },
+  { icon: 'lucide:piggy-bank', label: t('nav.savings'), to: '/savings' },
+  { icon: 'lucide:file-spreadsheet', label: t('nav.export'), to: '/export' },
+  { icon: 'lucide:settings', label: t('nav.settings'), to: '/settings' }
 ])
 
 function isActive(to: string) {
@@ -20,7 +19,7 @@ function isActive(to: string) {
   return to !== '/dashboard' && route.path.startsWith(to + '/')
 }
 
-function navigateTo(to: string) {
+function navigateTo(_to: string) {
   mobileMenuOpen.value = false
 }
 
@@ -29,7 +28,7 @@ const swipeState = ref({
   isDragging: false,
   startX: 0,
   currentX: 0,
-  startedFromEdge: false,
+  startedFromEdge: false
 })
 
 const drawerTransform = ref(0)
@@ -55,7 +54,7 @@ function handleTouchStart(e: TouchEvent) {
       isDragging: true,
       startX,
       currentX: startX,
-      startedFromEdge: !mobileMenuOpen.value,
+      startedFromEdge: !mobileMenuOpen.value
     }
   }
 }
@@ -157,7 +156,7 @@ onUnmounted(() => {
           class="drawer-overlay"
           :style="{
             opacity: swipeState.isDragging ? overlayOpacity : undefined,
-            transition: swipeState.isDragging ? 'none' : undefined,
+            transition: swipeState.isDragging ? 'none' : undefined
           }"
           @click="mobileMenuOpen = false"
         />
@@ -170,7 +169,7 @@ onUnmounted(() => {
           class="drawer-container"
           :style="{
             transform: swipeState.isDragging ? `translateX(${drawerTransform}px)` : undefined,
-            transition: swipeState.isDragging ? 'none' : undefined,
+            transition: swipeState.isDragging ? 'none' : undefined
           }"
         >
           <div class="mobile-menu">
@@ -198,16 +197,22 @@ onUnmounted(() => {
                 :key="item.to"
                 :to="item.to"
                 class="menu-nav-item"
-                :class="{ 'active': isActive(item.to) }"
+                :class="{ active: isActive(item.to) }"
                 @click="navigateTo(item.to)"
               >
                 <div class="nav-item-content">
                   <div class="nav-icon-container">
-                    <UIcon :name="item.icon" class="w-5 h-5" />
+                    <UIcon
+                      :name="item.icon"
+                      class="w-5 h-5"
+                    />
                   </div>
                   <span class="nav-item-label">{{ item.label }}</span>
                 </div>
-                <div v-if="isActive(item.to)" class="active-bar" />
+                <div
+                  v-if="isActive(item.to)"
+                  class="active-bar"
+                />
               </NuxtLink>
             </nav>
 
@@ -220,9 +225,15 @@ onUnmounted(() => {
                 rel="noopener noreferrer"
                 class="footer-link"
               >
-                <UIcon name="lucide:github" class="w-4 h-4" />
+                <UIcon
+                  name="lucide:github"
+                  class="w-4 h-4"
+                />
                 <span>GitHub</span>
-                <UIcon name="lucide:external-link" class="w-3.5 h-3.5 ml-auto opacity-50" />
+                <UIcon
+                  name="lucide:external-link"
+                  class="w-3.5 h-3.5 ml-auto opacity-50"
+                />
               </a>
             </div>
           </div>

@@ -12,18 +12,23 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt'
   ],
 
+  imports: {
+    presets: [
+      { from: '~/utils/format', imports: ['fmtBRL', 'fmtPct', 'fmtDate', 'fmtDateFull', 'isoDate'] },
+      { from: '~/utils/categories', imports: ['CATEGORIES', 'CATEGORY_LIST'] }
+    ]
+  },
+
   devtools: {
     enabled: true
   },
 
   css: ['~/assets/css/main.css'],
 
-  // Don't emit server-side sourcemaps in the build (faster build, smaller output)
-  sourcemap: { server: false },
-
-  icon: {
-    // Only bundle the icons actually referenced in the code, instead of whole collections
-    clientBundle: { scan: true }
+  colorMode: {
+    preference: 'dark',
+    fallback: 'dark',
+    classSuffix: ''
   },
 
   routeRules: {
@@ -31,29 +36,18 @@ export default defineNuxtConfig({
     '/api/webhooks/**': { security: { xssValidator: false } }
   },
 
-  security: {
-    // CSRF is not needed: all /api/* routes are protected by Clerk JWT session auth.
-    // Traditional CSRF only applies to cookie-only auth with no origin check.
-    csrf: false,
-    headers: {
-      contentSecurityPolicy: {
-        'img-src': [
-          "'self'",
-          'data:',
-          'https:',
-          'https://*.clerk.com',
-          'https://*.clerk.dev',
-          'https://img.clerk.com',
-          'https://images.clerk.dev'
-        ]
+  // Don't emit server-side sourcemaps in the build (faster build, smaller output)
+  sourcemap: { server: false },
+
+  compatibilityDate: '2025-01-15',
+
+  eslint: {
+    config: {
+      stylistic: {
+        commaDangle: 'never',
+        braceStyle: '1tbs'
       }
     }
-  },
-
-  colorMode: {
-    preference: 'dark',
-    fallback: 'dark',
-    classSuffix: ''
   },
 
   googleFonts: {
@@ -72,15 +66,12 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'pt-BR',
     strategy: 'no_prefix',
-    lazy: false,
     langDir: '../app/locales/'
   },
 
-  imports: {
-    presets: [
-      { from: '~/utils/format', imports: ['fmtBRL', 'fmtPct', 'fmtDate', 'fmtDateFull', 'isoDate'] },
-      { from: '~/utils/categories', imports: ['CATEGORIES', 'CATEGORY_LIST'] }
-    ]
+  icon: {
+    // Only bundle the icons actually referenced in the code, instead of whole collections
+    clientBundle: { scan: true }
   },
 
   pwa: {
@@ -124,13 +115,21 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: '2025-01-15',
-
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs'
+  security: {
+    // CSRF is not needed: all /api/* routes are protected by Clerk JWT session auth.
+    // Traditional CSRF only applies to cookie-only auth with no origin check.
+    csrf: false,
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': [
+          '\'self\'',
+          'data:',
+          'https:',
+          'https://*.clerk.com',
+          'https://*.clerk.dev',
+          'https://img.clerk.com',
+          'https://images.clerk.dev'
+        ]
       }
     }
   }

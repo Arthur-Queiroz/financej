@@ -15,7 +15,7 @@ export const usePeriod = () => {
   const customFrom = ref('')
   const customTo = ref('')
 
-  const dates = computed<{ from: string; to: string }>(() => {
+  const dates = computed<{ from: string, to: string }>(() => {
     const now = new Date()
     const today = isoDate(now)
     const year = now.getFullYear()
@@ -40,10 +40,10 @@ export const usePeriod = () => {
   })
 
   const tabs = computed(() => [
-    { key: 'week' as PeriodKey,   label: t('period.week') },
-    { key: 'month' as PeriodKey,  label: t('period.month') },
-    { key: 'year' as PeriodKey,   label: t('period.year') },
-    { key: 'custom' as PeriodKey, label: t('period.custom') },
+    { key: 'week' as PeriodKey, label: t('period.week') },
+    { key: 'month' as PeriodKey, label: t('period.month') },
+    { key: 'year' as PeriodKey, label: t('period.year') },
+    { key: 'custom' as PeriodKey, label: t('period.custom') }
   ])
 
   return { period, customFrom, customTo, dates, tabs }

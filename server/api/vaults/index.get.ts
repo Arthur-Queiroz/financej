@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     orderBy: { createdAt: 'asc' }
   })
 
-  return vaults.map(v => {
+  return vaults.map((v) => {
     const current = v.deposits.reduce((sum, d) => {
       return d.direction === 'IN' ? sum + Number(d.amount) : sum - Number(d.amount)
     }, 0)

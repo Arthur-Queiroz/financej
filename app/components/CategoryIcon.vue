@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { CATEGORIES } = useCategories()
-defineProps<{ cat: string; size?: number }>()
+defineProps<{ cat: string, size?: number }>()
 </script>
 
 <template>
@@ -14,9 +14,12 @@ defineProps<{ cat: string; size?: number }>()
       color: `var(${CATEGORIES[cat].token})`,
       display: 'grid',
       placeItems: 'center',
-      flexShrink: 0,
+      flexShrink: 0
     }"
   >
-    <UIcon :name="CATEGORIES[cat].icon" :style="{ width: `${(size ?? 40) * 0.45}px`, height: `${(size ?? 40) * 0.45}px` }" />
+    <UIcon
+      :name="CATEGORIES[cat].icon"
+      :style="{ width: `${(size ?? 40) * 0.45}px`, height: `${(size ?? 40) * 0.45}px` }"
+    />
   </div>
 </template>
