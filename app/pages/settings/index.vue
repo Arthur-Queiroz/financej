@@ -419,7 +419,7 @@ const activeSection = ref(t('settings.general'))
                   :value="currentLocale?.code"
                   class="fm-input"
                   style="cursor: pointer;"
-                  @change="(e) => setLanguage((e.target as HTMLSelectElement).value)"
+                  @change="(e: Event) => setLanguage((e.target as HTMLSelectElement).value)"
                 >
                   <option
                     v-for="loc in locales"
@@ -436,7 +436,7 @@ const activeSection = ref(t('settings.general'))
                   :value="currentCurrency?.code"
                   class="fm-input"
                   style="cursor: pointer;"
-                  @change="(e) => setCurrency((e.target as HTMLSelectElement).value)"
+                  @change="(e: Event) => setCurrency((e.target as HTMLSelectElement).value)"
                 >
                   <option
                     v-for="curr in CURRENCIES"
