@@ -19,7 +19,7 @@ async function download() {
       },
       responseType: 'blob'
     })
-    const url = URL.createObjectURL(resp as Blob)
+    const url = URL.createObjectURL(resp as unknown as Blob)
     const a = document.createElement('a')
     a.href = url
     a.download = `${t('export.filename')}-${dates.value.from}-${dates.value.to}.xlsx`

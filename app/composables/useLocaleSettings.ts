@@ -21,7 +21,7 @@ export const useLocaleSettings = () => {
   )
 
   const setLanguage = (code: string) => {
-    setLocale(code)
+    setLocale(code as 'pt-BR' | 'pt' | 'en')
   }
 
   const setCurrency = (code: string) => {

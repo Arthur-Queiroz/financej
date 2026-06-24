@@ -1,18 +1,19 @@
 <script setup lang="ts">
 const { CATEGORIES } = useCategories()
-defineProps<{ cat: string }>()
+const props = defineProps<{ cat: string }>()
+const meta = computed(() => CATEGORIES.value[props.cat])
 </script>
 
 <template>
   <span
-    v-if="CATEGORIES[cat]"
+    v-if="meta"
     class="fm-chip"
-    :style="{ color: `var(${CATEGORIES[cat].token})` }"
+    :style="{ color: `var(${meta.token})` }"
   >
     <span
       class="inline-block rounded-sm"
       style="width: 8px; height: 8px; background: currentColor; flex-shrink: 0;"
     />
-    <span style="color: var(--ink-2);">{{ CATEGORIES[cat].label }}</span>
+    <span style="color: var(--ink-2);">{{ meta.label }}</span>
   </span>
 </template>

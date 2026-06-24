@@ -13,7 +13,7 @@ interface DashboardSummary {
 }
 
 export const useDashboard = (dates: Ref<{ from: string, to: string }>) => {
-  const { data, pending, refresh } = useFetch<DashboardSummary>('/api/dashboard/summary', {
+  const { data, pending, refresh } = useFetch<DashboardSummary | null>('/api/dashboard/summary', {
     query: computed(() => ({ from: dates.value.from, to: dates.value.to })),
     default: () => null,
     watch: [dates]

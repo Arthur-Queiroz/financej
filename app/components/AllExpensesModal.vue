@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { Expense } from '@prisma/client'
+import type { ClientExpense } from '~/composables/useExpenses'
 
 const { t } = useI18n()
 
 const open = defineModel<boolean>()
 
 defineProps<{
-  expenses: Expense[] | null
+  expenses: ClientExpense[] | null
   loading?: boolean
 }>()
 </script>

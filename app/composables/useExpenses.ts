@@ -1,5 +1,15 @@
+// Client-side shape of an expense after JSON serialization over the wire
+// (Prisma Decimal -> string, Date -> string).
+export interface ClientExpense {
+  id: string
+  amount: string | number
+  category: string
+  description?: string | null
+  date: string
+}
+
 export const useExpenses = (dates: Ref<{ from: string, to: string }>) => {
-  const { data, pending, refresh } = useFetch('/api/expenses', {
+  const { data, pending, refresh } = useFetch<ClientExpense[]>('/api/expenses', {
     query: computed(() => ({ from: dates.value.from, to: dates.value.to })),
     default: () => [],
     watch: [dates]

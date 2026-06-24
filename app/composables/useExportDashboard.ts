@@ -1,4 +1,4 @@
-import type { Expense } from '@prisma/client'
+import type { ClientExpense } from '~/composables/useExpenses'
 import { fmtBRL } from '~/utils/format'
 
 interface CategoryBreakdown {
@@ -25,7 +25,7 @@ export const useExportDashboard = () => {
   const POSITIVE_COLOR = [16, 185, 129] as const // Green for balance
 
   // Chart colors palette (distinct colors for pie chart)
-  const CHART_COLORS = [
+  const CHART_COLORS: [number, number, number][] = [
     [37, 99, 235], // Blue
     [16, 185, 129], // Green
     [245, 158, 11], // Amber
@@ -36,11 +36,11 @@ export const useExportDashboard = () => {
     [251, 146, 60], // Orange
     [34, 197, 94], // Light Green
     [168, 85, 247] // Violet
-  ] as const
+  ]
 
   async function exportDashboardToPDF(
     summary: DashboardSummary | null,
-    expenses: Expense[] | null,
+    expenses: ClientExpense[] | null,
     periodLabel: string,
     dateRange: { from: string, to: string }
   ) {
@@ -50,7 +50,7 @@ export const useExportDashboard = () => {
         title: t('dashboard.generating_pdf', 'Gerando PDF...'),
         description: t('dashboard.creating_report', 'Criando relatório'),
         color: 'neutral',
-        timeout: 0
+        duration: 0
       })
 
       // Loaded on demand: jsPDF is browser-only and heavy (~400 kB), so we keep it
@@ -145,7 +145,7 @@ export const useExportDashboard = () => {
         sortedCategories.forEach((cat, idx) => {
           const percentage = (cat.amount / summary.totalExpenses) * 100
           const sliceAngle = (percentage / 100) * 2 * Math.PI
-          const color = CHART_COLORS[idx % CHART_COLORS.length]
+          const color = CHART_COLORS[idx % CHART_COLORS.length]!
 
           // Draw filled segment using multiple small triangles
           pdf.setFillColor(...color)
@@ -195,7 +195,7 @@ export const useExportDashboard = () => {
 
         sortedCategories.forEach((cat, idx) => {
           const percentage = (cat.amount / summary.totalExpenses) * 100
-          const color = CHART_COLORS[idx % CHART_COLORS.length]
+          const color = CHART_COLORS[idx % CHART_COLORS.length]!
 
           // Check if need new page
           if (barYPos > 275) {
@@ -279,7 +279,7 @@ export const useExportDashboard = () => {
           // Amount
           pdf.setFontSize(10)
           pdf.setTextColor(...NEGATIVE_COLOR)
-          pdf.text(`-${fmtBRL(exp.amount).replace('R$ ', '')}`, margin + 150, yPos)
+          pdf.text(`-${fmtBRL(Number(exp.amount)).replace('R$ ', '')}`, margin + 150, yPos)
 
           yPos += 7
 

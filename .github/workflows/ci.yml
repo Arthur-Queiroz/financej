@@ -30,11 +30,8 @@ jobs:
       - name: Test
         run: pnpm run test
 
-      # Informational only for now — the codebase still has ~60 pre-existing type
-      # errors. Does not block the deploy gate; to be paid down incrementally.
       - name: Typecheck
         run: pnpm run typecheck
-        continue-on-error: true
 
   deploy:
     needs: quality

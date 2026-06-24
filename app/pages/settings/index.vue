@@ -4,7 +4,17 @@ definePageMeta({ layout: 'dashboard', middleware: 'auth' })
 const { t } = useI18n()
 const colorMode = useColorMode()
 const { accent, ACCENTS } = useAccent()
-const { user } = useUser()
+const { user: clerkUser } = useUser()
+const user = clerkUser as unknown as Ref<{
+  imageUrl?: string
+  hasImage?: boolean
+  fullName?: string | null
+  firstName?: string | null
+  primaryEmailAddress?: { emailAddress?: string | null } | null
+  setProfileImage: (params: { file: File | null }) => Promise<unknown>
+  reload: () => Promise<unknown>
+  update: (params: { firstName?: string, lastName?: string }) => Promise<unknown>
+} | null | undefined>
 const toast = useToast()
 const { locales, currentLocale, CURRENCIES, currentCurrency, setLanguage, setCurrency } = useLocaleSettings()
 
