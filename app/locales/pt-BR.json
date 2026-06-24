@@ -239,5 +239,11 @@
     "filename": "financas",
     "toast_success": "Arquivo gerado com sucesso!",
     "toast_error": "Erro ao gerar arquivo"
+  },
+  "pwa": {
+    "install_title": "Instalar aplicativo",
+    "install_description": "Instale este app no seu dispositivo para acesso rápido.",
+    "install_button": "Instalar",
+    "dismiss": "Agora não"
   }
 }

@@ -239,5 +239,11 @@
     "filename": "expenses",
     "toast_success": "File generated successfully!",
     "toast_error": "Error generating file"
+  },
+  "pwa": {
+    "install_title": "Install app",
+    "install_description": "Install this app on your device for quick access.",
+    "install_button": "Install",
+    "dismiss": "Not now"
   }
 }

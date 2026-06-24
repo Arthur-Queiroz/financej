@@ -1,4 +1,3 @@
-import jsPDF from 'jspdf'
 import type { Expense } from '@prisma/client'
 import { CATEGORIES } from '~/utils/categories'
 import { fmtBRL } from '~/utils/format'
@@ -56,6 +55,10 @@ export const useExportDashboard = () => {
         color: 'neutral',
         timeout: 0
       })
+
+      // Loaded on demand: jsPDF is browser-only and heavy (~400 kB), so we keep it
+      // out of the SSR bundle and the main client chunk and import it lazily here.
+      const { default: jsPDF } = await import('jspdf')
 
       // Create PDF
       const pdf = new jsPDF({

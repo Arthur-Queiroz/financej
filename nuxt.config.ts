@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@nuxtjs/google-fonts',
     '@nuxtjs/i18n',
-    'nuxt-icons'
+    'nuxt-icons',
+    '@vite-pwa/nuxt'
   ],
 
   devtools: {
@@ -16,6 +17,14 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  // Don't emit server-side sourcemaps in the build (faster build, smaller output)
+  sourcemap: { server: false },
+
+  icon: {
+    // Only bundle the icons actually referenced in the code, instead of whole collections
+    clientBundle: { scan: true }
+  },
 
   routeRules: {
     // Clerk webhook receives raw POST from external service — CSRF must be disabled
@@ -72,6 +81,47 @@ export default defineNuxtConfig({
       { from: '~/utils/format', imports: ['fmtBRL', 'fmtPct', 'fmtDate', 'fmtDateFull', 'isoDate'] },
       { from: '~/utils/categories', imports: ['CATEGORIES', 'CATEGORY_LIST'] }
     ]
+  },
+
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'financej',
+      short_name: 'financej',
+      description: 'Gerencie suas finanças pessoais com facilidade.',
+      theme_color: '#0f172a',
+      background_color: '#0f172a',
+      display: 'standalone',
+      display_override: ['standalone', 'minimal-ui'],
+      lang: 'pt-BR',
+      icons: [
+        {
+          src: '/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable'
+        },
+        {
+          src: '/pwa-icon.svg',
+          sizes: 'any',
+          type: 'image/svg+xml',
+          purpose: 'any maskable'
+        }
+      ]
+    },
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico,woff,woff2}'],
+      navigateFallback: null
+    },
+    devOptions: {
+      // Don't generate the service worker during `nuxt dev` — pure overhead locally
+      enabled: false
+    }
   },
 
   compatibilityDate: '2025-01-15',

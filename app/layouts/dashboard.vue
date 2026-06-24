@@ -75,7 +75,12 @@ function isActive(to: string) {
 
 /* ─── Mobile: stack vertically, no sidebar ─── */
 .dash-sidebar { display: none; }
-.dash-main    { min-height: 100dvh; background: var(--bg); }
+.dash-main {
+  min-height: 100dvh;
+  min-height: 100svh;
+  background: var(--bg);
+  padding-top: env(safe-area-inset-top, 0px);
+}
 
 /* ─── Desktop (≥ 768px): side-by-side grid ─── */
 @media (min-width: 768px) {
@@ -84,11 +89,16 @@ function isActive(to: string) {
     grid-template-columns: 240px 1fr;
   }
 
+  .dash-main {
+    padding-top: 0;
+  }
+
   .dash-sidebar {
     display: flex;
     flex-direction: column;
     gap: 24px;
     padding: 24px 16px;
+    padding-top: max(24px, env(safe-area-inset-top, 0px));
     border-right: 1px solid var(--border);
     background: var(--bg);
     position: sticky;
